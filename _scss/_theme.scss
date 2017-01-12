@@ -1,4 +1,9 @@
-// Theme Components
-@import url("theme/_components.scss");
+@import url("theme/_mixins.scss");
+@import url("theme/_normalize.scss");
+@import url("theme/_fonts.scss.liquid");
+@import url("theme/_base.scss");
+@import url("theme/_layout.scss");
 @import url("theme/_type.scss");
+@import url("theme/_components.scss");
 @import url("theme/_views.scss");
+@import url("theme/_utilities.scss");

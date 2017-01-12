@@ -1,0 +1,34 @@
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+  <li class="product-list__product">
+    <a href="{{ product.url }}" title="{{ product.title | escape }}">
+      {% comment %} Adjust these src's as we adjust the site breakpoints {% endcomment %}
+      <img 
+        src="{{ product | img_url: '700x' }}" 
+        srcset="
+                {{ product | img_url: '700x' }}, 
+                {{ product | img_url: '900x' }} 800w"
+        alt="{{ product.featured_image.alt | escape }}" class="product-list__product-img" />
+      <div class="product-list__product-info">
+        <span class="product-list__product-title">{{ product.title }} - </span>
+        <span class="product-list__product-price">
+          {% if product.price_varies %}From{% endif %}
+          {{ product.price | money }}
+          {% if on_sale %}
+            <span class="compare-at-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        </span>
+
+        <div class="product-list__product-swatches">
+          <ul class="swatches">
+            <li class="swatch" style="background-color: red;"></li>
+            <li class="swatch" style="background-color: blue;"></li>
+            <li class="swatch" style="background-color: black;"></li>
+          </ul>
+        </div>
+      </div>
+    </a>
+  </li>

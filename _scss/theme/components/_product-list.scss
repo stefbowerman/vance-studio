@@ -1,0 +1,58 @@
+.product-list {
+  text-align: center;
+  @media (min-width: $screen-xs-min){
+    text-align: left;
+  }
+}
+
+.product-list__product {
+  &:not(:last-child) {
+    margin-bottom: 100px;
+  }
+}
+
+.product-list__product-img {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.product-list__product-info {
+  @include clearfix;
+}
+
+.product-list__product-title {
+  font-weight: bold;
+  letter-spacing: $letter-spacing-large;
+}
+
+.product-list__product-price {
+}
+
+.product-list__product-swatches {
+  display: block;
+
+  @media (min-width: $screen-xs-min){ // TODO - Determine breakpoints ??
+    float: right;  
+  }
+  
+}
+
+// TODO - Move this somewhere else that makes sense
+.swatches {
+  font-size: 0;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.swatch {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  margin: 0 6px;
+
+  @media (min-width: $screen-xs-min){
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

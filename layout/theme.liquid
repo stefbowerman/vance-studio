@@ -8,10 +8,11 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
     <title>
-    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; Tagged \"{{ meta_tags }}\"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
+
+    {{ page_title | replace: 'Your Shopping Cart', 'Shopping Bag' }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; Tagged \"{{ meta_tags }}\"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
     </title>
 
     {% if page_description %}
@@ -47,17 +48,13 @@
 
   </head>
 
-  <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
+  <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
   
     {% include 'header' %}
 
-    <div id="main" role="main">
-      <div class="container">
-        {{ content_for_layout }}
-      </div>
-    </div>
-
-    {% include 'footer' %}
+    <main class="main" role="main">
+      {{ content_for_layout }}
+    </main>
       
     {{ 'app.js'  | asset_url | script_tag }}
 

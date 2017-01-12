@@ -1,5 +1,5 @@
 /* ==========================================================================
-  10. Product and collection pages.
+  Product Detail Page
   ========================================================================== */
 
 /* Quickly hiding default variant drop-down when JavaScript is enabled */
@@ -8,23 +8,86 @@
 
 /* Product option wrapper. */
 .selector-wrapper {
+  + .selector-wrapper {
+    margin-top: 20px;
+  }
 
-}
-
-.sort-by {
-  
-}
-
-@media (max-width: $screen-xs) {
-  .sort-by {
-
+  label {
+    display: none; // extend sr-only?
   }
 }
 
-.prod-caption {
+%form-control {
+  display: block;
+  width: 100%;
+  // max-width: 200px;
+  padding: 6px 10px 4px;
+  border: 1px solid $text-color;
+  border-radius: 0;
+  -webkit-appearance: none;
+  background: $body-bg;
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing;
+  font-weight: bold;
+  cursor: pointer;
+  background: {
+    color: $body-bg;
+    color: transparent;
+  }
+}
+
+.single-option-selector {
+  @extend %form-control;
+  cursor: ns-resize;
+
+  background: {
+    image: url('{{ "select-down.png" | asset_url }}');
+    position: right 7px top 50%;
+    repeat: no-repeat;
+    size: auto 8px; // h x w
+  }
+  padding-right: 8px + (10px * 2); // double horizontal form-control padding + image width
+}
+
+.product-photos {
+  margin-bottom: 30px;
+  @media (min-width: $screen-sm-min) {
+    margin-bottom: 0;
+  }
+}
+
+.product-details {
+
+  @media (min-width: $screen-sm-min){
+    position: fixed;
+    right: $body-padding-h;
+    top: 48%;
+    transform: translateY(-50%);
+    width: calc( ( (100% - #{$main-column-max-width}) / 2 ) - #{$body-padding-h} - 20px );
+
+    .single-option-selector,
+    .button,
+    .product-details__description {
+      max-width: 250px;
+    }
+  }
 
 }
 
-.product-photo-thumb:nth-child(2n+1) {
+.product-details__title {
+  margin: 0 0 5px;
+  font-size: $font-size-base;
+}
 
+.product-details__price {
+  margin-bottom: 30px;
+}
+
+.button--addtocart {
+  margin: 30px 0;
+}
+
+.product-details__description {
+  text-transform: none;
 }

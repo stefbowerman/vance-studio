@@ -1,0 +1,23 @@
+.button {
+  display: block;
+  width: 100%;
+  padding: 6px 10px 4px;
+  border: 1px solid $text-color;
+  border-radius: 0;
+  -webkit-appearance: none;
+  background: $body-bg;
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing;
+  font-weight: bold;
+  cursor: pointer;
+  background: {
+    color: $body-bg;
+    color: transparent;
+  }
+
+  &:disabled {
+    color: mix($text-color, $body-bg, 20%);
+    cursor: not-allowed;
+  }
+}

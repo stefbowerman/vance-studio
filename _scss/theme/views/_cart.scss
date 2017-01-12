@@ -1,0 +1,88 @@
+/* ==========================================================================
+  Shopping Cart Page
+  ========================================================================== */
+
+.cart-table {
+  width: 100%;
+  margin-bottom: 0;
+  border: 0;
+  display: table;
+  border-collapse: collapse;
+
+  thead {
+    display: none;
+  }
+
+  td {
+    vertical-align: middle;
+    border-bottom: 1px solid $text-color;
+    border-top: 1px solid $text-color;
+    padding: 12px 8px;
+  
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+      text-align: right;
+    }
+  }
+}
+
+// TR and child TDs
+.cart-row {}
+
+.cart-row__img {
+  width: 80px;
+  @media (min-width: $screen-xs-min) {
+    width: 115px;
+  }
+}
+
+.cart-row__item {
+  h2 {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
+
+.cart-row__price {}
+
+.cart-row__qty {
+  input {
+    width: 40px;
+    text-align: center;
+    // Todo - Move this out 
+    &::-webkit-inner-spin-button, 
+    &::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+  }
+}
+
+.cart-row__total {}
+
+.cart-row__remove {
+  font-size: $font-size-large;
+  font-weight: bold;
+}
+
+.cart-footer {
+  @include clearfix;
+
+  h2, h3 {
+    font-size: inherit;
+  }
+
+  .button--checkout {
+    display: inline-block;
+    width: 100%;
+    float: right;
+    @media (min-width: 656px){
+      width: auto;
+    }
+  }
+}
