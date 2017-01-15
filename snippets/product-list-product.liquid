@@ -9,10 +9,12 @@
       <img 
         src="{{ product | img_url: '700x' }}" 
         srcset="
-                {{ product | img_url: '700x' }}, 
+                {{ product | img_url: '700x' }}, ''
                 {{ product | img_url: '900x' }} 800w"
         alt="{{ product.featured_image.alt | escape }}" class="product-list__product-img" />
-      <div class="product-list__product-info">
+    </a>
+    <div class="product-list__product-info">
+      <a href="{{ product.url }}" title="{{ product.title | escape }}">
         <span class="product-list__product-title">{{ product.title }} - </span>
         <span class="product-list__product-price">
           {% if product.price_varies %}From{% endif %}
@@ -21,14 +23,11 @@
             <span class="compare-at-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span>
           {% endif %}
         </span>
-
+      </a>
+      {% if product.available and product.variants.size > 1 %}
         <div class="product-list__product-swatches">
-          <ul class="swatches">
-            <li class="swatch" style="background-color: red;"></li>
-            <li class="swatch" style="background-color: blue;"></li>
-            <li class="swatch" style="background-color: black;"></li>
-          </ul>
+          {% include 'product-list-product-swatches' %}
         </div>
-      </div>
-    </a>
+      {% endif %}
+    </div>
   </li>

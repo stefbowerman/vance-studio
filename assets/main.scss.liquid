@@ -1128,7 +1128,7 @@ footer {
         line-height: 1;
       }
 
-      a {
+      &, a {
         color: $red;
       }
     }
@@ -1187,32 +1187,66 @@ footer {
 
 .product-list__product-swatches {
   display: block;
+  margin-top: 6px;
 
   @media (min-width: $screen-xs-min){ // TODO - Determine breakpoints ??
-    float: right;  
+    float: right;
+    margin: 0;
   }
   
 }
-
-// TODO - Move this somewhere else that makes sense
 .swatches {
   font-size: 0;
-  margin: 6px 0 0;
   padding: 0;
 }
 
 .swatch {
   display: inline-block;
+  position: relative;
   height: 12px;
   width: 12px;
   margin: 0 6px;
+  border: 1px solid transparent;
+  background: {
+    size: cover;
+    repeat: no-repeat;
+  }
 
   @media (min-width: $screen-xs-min){
     &:last-child {
       margin-right: 0;
     }
   }
+
+  &.swatch--white {
+    background-color: white;
+    border-color: darken(white, 15%);
+  }
+  &.swatch--black {
+    background-color: black;
+  }
+  &.swatch--yellow {
+    background-color: yellow;
+  }
+  &.swatch--red {
+    background-color: red;
+  }
+  &.swatch--blue {
+    background-color: blue;
+  }
+  &.swatch--green {
+    background-color: green;
+  }
 }
+
+.swatch__link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 /* ==========================================================================
   Product Detail Page
   ========================================================================== */

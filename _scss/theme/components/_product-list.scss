@@ -30,29 +30,11 @@
 
 .product-list__product-swatches {
   display: block;
+  margin-top: 6px;
 
   @media (min-width: $screen-xs-min){ // TODO - Determine breakpoints ??
-    float: right;  
+    float: right;
+    margin: 0;
   }
   
-}
-
-// TODO - Move this somewhere else that makes sense
-.swatches {
-  font-size: 0;
-  margin: 6px 0 0;
-  padding: 0;
-}
-
-.swatch {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
-  margin: 0 6px;
-
-  @media (min-width: $screen-xs-min){
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 }

@@ -1,0 +1,37 @@
+{% comment %}
+  Modified version for catalog page + simplified to only work with color swatches.
+  See original here - https://raw.githubusercontent.com/carolineschnapp/color-swatches/master/swatch.liquid
+{% endcomment %}
+{% assign swatch = 'Color' %}
+{% assign file_extension = 'png' %}
+{% assign found_option = false %}
+{% assign option_index = 0 %}
+
+{% unless swatch == blank %}
+  {% for option in product.options %}
+    {% if option == swatch %}
+      {% assign found_option = true %}
+      {% assign option_index = forloop.index0 %}
+    {% endif %}
+  {% endfor %}
+
+  {% if found_option %}
+    <ul class="swatches">
+      {% assign values = '' %}
+      {% for variant in product.variants %}
+        {% assign value = variant.options[option_index] %}
+        {% unless values contains value %}
+          {% assign values = values | join: ',' %}
+          {% assign values = values | append: ',' | append: value %} 
+          {% assign values = values | split: ',' %}
+          <li class="swatch swatch--{{ value | handle }}" style="background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})">
+            <a href="{{ product.url }}?variant={{variant.id}}" class="swatch__link">{{ value | handle }}</a>
+          </li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% comment %} Fail silently {% endcomment %}
+  {% endif %}
+
+{% endunless %}
