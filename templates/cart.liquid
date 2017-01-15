@@ -15,9 +15,7 @@
         
         <thead>
           <tr>
-            <th>Item</th>
-            <th>&nbsp;</th>
-            <th>Price</th>
+            <th colspan="2">Item</th>
             <th>Quantity</th>
             <th>&nbsp;</th>
             <th>Total</th>
@@ -59,13 +57,13 @@
                 {% endfor %}
               </p>
               {% endif %}
+              <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart-row__item-remove">Remove</a>
             </td>
-            <td class="cart-row__price">{{ item.price | money }}</td>
             <td class="cart-row__qty">
               <input type="number" name="updates[]" id="updates_{{ item.id }}" class="quantity form-control" value="{{ item.quantity }}" />
             </td>
             <td class="cart-row__remove">
-              <a href="/cart/change?line={{ forloop.index }}&quantity=0" title="Remove Item">&times;</a>
+              <a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove</a>
             </td>
             <td class="cart-row__total">{{ item.line_price | money }}</td>
           </tr>

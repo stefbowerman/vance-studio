@@ -1,23 +1,65 @@
+// Borrowed heavily from bootstrap
+
 .button {
-  display: block;
-  width: 100%;
+  display: inline-block;
   padding: 6px 10px 4px;
   border: 1px solid $text-color;
   border-radius: 0;
   -webkit-appearance: none;
-  background: $body-bg;
-  background: transparent;
+  vertical-align: middle;
   text-transform: uppercase;
+  text-align: center;
   letter-spacing: $letter-spacing;
   font-weight: bold;
   cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
   background: {
     color: $body-bg;
     color: transparent;
   }
+  line-height: $line-height-base;
 
-  &:disabled {
+  // &,
+  // &:active,
+  // &.active {
+  //   &:focus,
+  //   &.focus {
+  //     @include tab-focus;
+  //   }
+  // }
+
+  // &:hover,
+  // &:focus {
+  //   color: $btn-default-color;
+  //   text-decoration: none;
+  // }
+
+  &.disabled,
+  &[disabled] {
     color: mix($text-color, $body-bg, 20%);
     cursor: not-allowed;
+  }
+}
+
+// Block button
+// --------------------------------------------------
+
+.button--block {
+  display: block;
+  width: 100%;
+}
+
+// Vertically space out multiple block buttons
+.button--block + .button--block {
+  margin-top: 5px;
+}
+
+// Specificity overrides
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  &.button--block {
+    width: 100%;
   }
 }

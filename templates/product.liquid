@@ -70,7 +70,7 @@
       <form action="/cart/add" method="post" enctype="multipart/form-data">   
 
         <div id="product-variants" class="{% if hide_default_title %} hidden{% endif %}">
-          <select id="product-select" name="id">
+          <select id="product-select" name="id" class="form-control">
           {% for variant in product.variants %}
             <option{% if variant == product.selected_or_first_available_variant %} selected{% endif %} value="{{ variant.id }}">
             {{ variant.title }} - {{ variant.price | money }}
@@ -112,7 +112,7 @@
       if (variant.featured_image) {
         var newImage = variant.featured_image; // New image object.
         var mainImageDomEl = jQuery('.product-photo-container img')[0]; // DOM element of main image we need to swap.
-        Shopify.Image.switchImage(newImage, mainImageDomEl, switchImage); // Define switchImage (the callback) in your theme's JavaScript file.
+        // Shopify.Image.switchImage(newImage, mainImageDomEl, switchImage); // Define switchImage (the callback) in your theme's JavaScript file.
       }
       
       // Selected a valid variant that is available.
@@ -158,6 +158,8 @@
       onVariantSelected: selectCallback, 
       enableHistoryState: true
     });
+
+    $('.single-option-selector').addClass('form-control');
     
     // Add label if only one product option and it isn't 'Title'.
     {% if product.options.size == 1 and product.options.first != 'Title' %}

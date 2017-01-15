@@ -5,7 +5,7 @@
 
 //== Colors
 //
-//## Gray and brand colors for use across Bootstrap.
+//## Gray and brand colors
 
 $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 8%) !default;    // #141414
@@ -13,6 +13,8 @@ $gray-dark:              lighten($gray-base, 20%) !default;   // #333
 $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+$red:                   #F00;
 
 //== Scaffolding
 //
@@ -22,7 +24,7 @@ $body-bg:               #fff !default;
 $text-color:            $gray-darker !default;
 
 $link-color:            $text-color !default;
-$link-hover-color:      red !default;
+$link-hover-color:      $red !default;
 $link-hover-decoration: none !default;
 
 
@@ -111,3 +113,13 @@ $hr-border:                   $gray-lighter !default;
 
 $main-column-max-width:       640px;
 $body-padding-h:              35px;
+
+//== Forms
+//
+//##
+
+$input-bg:                       $body-bg !default;
+$input-bg-disabled:              $body-bg !default;
+$input-color:                    $text-color !default;
+$input-border:                   $text-color !default;
+$input-color-placeholder:        #999 !default;
