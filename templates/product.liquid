@@ -9,16 +9,17 @@
   
     {% if product.images.size == 0 %}
   
-      <div class="product-photo-container">
+      <div class="product-photo__main">
         <img src="{{ '' | img_url: 'grande' }}" alt="" />
       </div>
     
     {% else %}
     
       {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-      <div class="product-photo-container">
-        <a href="{{ featured_image | img_url: '1024x1024' }}">
-          <img src="{{ featured_image | img_url: 'grande' }}" alt="{{ product.title | escape }}" />
+      <div class="product-photo__main">
+        <div class="click-shield"></div>
+        <a href="{{ featured_image | img_url: '1200x' }}">
+          <img src="{{ featured_image | img_url: '800x' }}" alt="{{ product.title | escape }}" />
         </a>
       </div>
 
@@ -26,8 +27,8 @@
       <ul class="product-photo-thumbs">
         {% for image in product.images %}
         <li class="product-photo-thumb">
-          <a href="{{ image | img_url: '1024x1024' }}">
-            <img src="{{ image | img_url: 'small' }}" alt="{{ image.alt | escape }}" />
+          <a href="{{ image | img_url: '800x' }}" data-fs="{{ image | img_url: '1200x' }}">
+            <img src="{{ image | img_url: '150x' }}" alt="{{ image.alt | escape }}" />
           </a>
         </li>
         {% endfor %}
@@ -78,10 +79,6 @@
           {% endfor %}
           </select>
         </div>        
-               
-        <div id="backorder" class="hidden">
-          <p>{{ '%s is back-ordered. We will ship it separately in 10 to 15 days.' | replace: '%s', '<span id="selected-variant"></span>' }}</p>
-        </div>
           
         <div id="product-add">
           <input type="submit" name="add" id="add" class="button button--addtocart" value="Add to Bag">
@@ -124,14 +121,11 @@
         // If item is backordered yet can still be ordered, we'll show special message.
         if (variant.inventory_management && variant.inventory_quantity <= 0) {
           jQuery('#selected-variant').html({{ product.title | json }}{% unless hide_default_title %} + ' - ' + variant.title{% endunless %});
-          jQuery('#backorder').removeClass("hidden");
         } else {
-          jQuery('#backorder').addClass("hidden");
         }
         
       } else {
         // Variant is sold out.
-        jQuery('#backorder').addClass('hidden');
         jQuery('#add').val({{ sold_out | json }}).addClass('disabled').prop('disabled', true);       
       }
       
@@ -145,7 +139,6 @@
     } else {
       // variant doesn't exist.
       jQuery('#product-price').empty();
-      jQuery('#backorder').addClass('hidden');
       jQuery('#add').val({{ unavailable | json }}).addClass('disabled').prop('disabled', true);
     }
 

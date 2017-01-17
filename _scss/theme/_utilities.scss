@@ -19,3 +19,13 @@
 .hidden {
   display: none !important;
 }
+
+// Prevent click interactions on certain elements
+.click-shield {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

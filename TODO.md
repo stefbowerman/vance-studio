@@ -1,2 +1,3 @@
-Swatches
-Slim down modernizr
+Lens Zoom
+Touch Zoom (iScroll)
+Click Shield on Product Images
