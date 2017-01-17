@@ -2,27 +2,41 @@
   Product Detail Page
   ========================================================================== */
 
-/* Quickly hiding default variant drop-down when JavaScript is enabled */
-/* See this: http://www.learningjquery.com/2008/10/1-way-to-avoid-the-flash-of-unstyled-content/ */
-.js #product-select { display: none; }
-
-/* Product option wrapper. */
-.selector-wrapper {
-  + .selector-wrapper {
-    margin-top: 20px;
-  }
-
-  label {
-    display: none; // extend sr-only?
-  }
-}
-
+/* START Product Photos */
 .product-photos {
   margin-bottom: 30px;
   @media (min-width: $screen-sm-min) {
     margin-bottom: 0;
   }
 }
+
+.product-photo__main {
+  position: relative;
+  border: 1px solid transparent;
+  transition: border-color 100ms ease;
+
+  &.is-zoomable {
+    cursor: -webkit-zoom-in;
+  }
+  &.is-zoomed {
+    border-color: darken($body-bg, 8%);
+    cursor: -webkit-zoom-out;
+  }
+}
+
+.product-photo-thumbs {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.product-photo-thumb {
+  width: 76px;
+  border: 1px solid $gray-lighter;
+  margin: 0 3px 6px;
+  display: inline-block;
+  padding: 3px;
+}
+/* END Product Photos */
 
 .product-details {
 
@@ -40,6 +54,21 @@
     }
   }
 
+}
+
+/* Quickly hiding default variant drop-down when JavaScript is enabled */
+/* See this: http://www.learningjquery.com/2008/10/1-way-to-avoid-the-flash-of-unstyled-content/ */
+.js #product-select { display: none; }
+
+/* Product option wrapper. */
+.selector-wrapper {
+  + .selector-wrapper {
+    margin-top: 20px;
+  }
+
+  label {
+    display: none; // extend sr-only?
+  }
 }
 
 .product-details__title {

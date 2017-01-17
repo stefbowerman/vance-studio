@@ -1,25 +1,10 @@
 ;(function($, Modernizr, undefined){
 
-  /*============================*/
-  /* Update main product image. */
-  /*============================*/
-  var switchImage = function(newImageSrc, newImage, mainImageDomEl) {
-    // newImageSrc is the path of the new image in the same size as originalImage is sized.
-    // newImage is Shopify's object representation of the new image, with various attributes, such as scr, id, position.
-    // mainImageDomEl is the passed domElement, which has not yet been manipulated. Let's manipulate it now.
-    $(mainImageDomEl).parents('a').attr('href', newImageSrc.replace('_grande', '_1024x1024'));
-    $(mainImageDomEl).attr('src', newImageSrc);  
-  };
-
-  var supportsSVG = function() {
-    return document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1');
-  };
-
   $(function(){
 
     /* Remove SVG images to avoid broken images in all browsers that don't support SVG. */
     /*==========================*/
-    if (!supportsSVG()) {
+    if (!Modernizr.svg) {
       $('img[src*=".svg"]').remove();
     }
     
@@ -30,13 +15,12 @@
       var width = $(this).width();
       $(this).attr('src', src).attr('width', width).removeAttr('height');
     });
-    
-    /* Update main product image when a thumbnail is clicked. */
-    /*==========================*/
-    $('.product-photo-thumb a').on('click', function(e) { 
-      e.preventDefault();
-      switchImage($(this).attr('href'), null, $('.product-photo-container img')[0]);
-    } );
+
+    /* Update cart page on blur of quantity input */
+    /*==========================*/ 
+    $('.cart-table').on('blur', '.cart-row__qty input', function(){
+      $('form[action="/cart"]').submit();
+    });
 
   });
 
