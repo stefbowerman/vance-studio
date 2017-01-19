@@ -14,7 +14,7 @@
   width: auto;
   height: 64px;
 
-  @media (min-width: $screen-xs-min) {
+  @media (min-width: $screen-sm-min) {
     height: 110px;
   }
 }
@@ -26,7 +26,7 @@
   top: 42px;
   z-index: $zindex-logo;
 
-  @media (min-width: $screen-xs-min) {
+  @media (min-width: $screen-sm-min) {
     top: 60px;
   }
 }
@@ -76,7 +76,7 @@
   display: none;
 }
 
-@media (min-width: $screen-xs-min){
+@media (min-width: $screen-sm-min){
   .header-cart__text {
     display: inline;
   }
