@@ -24,7 +24,7 @@
           {% assign values = values | join: ',' %}
           {% assign values = values | append: ',' | append: value %} 
           {% assign values = values | split: ',' %}
-          <li class="swatch swatch--{{ value | handle }}" style="background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})">
+          <li class="swatch swatch--{{ value | handle }}" style="background-image: url({{ value | handle | prepend: 'swatch-' | append: '.' | append: file_extension | asset_url }})">
             <a href="{{ product.url }}?variant={{variant.id}}" class="swatch__link">{{ value | handle }}</a>
           </li>
         {% endunless %}
