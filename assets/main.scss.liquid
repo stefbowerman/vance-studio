@@ -1217,7 +1217,7 @@ footer {
   height: 12px;
   width: 12px;
   margin: 0 6px;
-  border: 1px solid transparent;
+  border: 1px solid $body-bg;
   background: {
     size: cover;
     repeat: no-repeat;
@@ -1234,19 +1234,19 @@ footer {
     border-color: darken(white, 15%);
   }
   &.swatch--black {
-    background-color: black;
+    background-color: #2E2E2E;
   }
   &.swatch--yellow {
-    background-color: yellow;
+    background-color: #DFCA2F;
   }
   &.swatch--red {
-    background-color: red;
+    background-color: #E31033;
   }
   &.swatch--blue {
-    background-color: blue;
+    background-color: #046499;
   }
   &.swatch--green {
-    background-color: green;
+    background-color: #30a532;
   }
 }
 
@@ -1258,6 +1258,40 @@ footer {
   bottom: 0;
 }
 
+.pagination {
+  display: block;
+  margin: 45px 0;
+  text-align: center;
+
+  @media (min-width: $screen-xs-min) {
+    text-align: right;
+  }
+
+  @media (min-width: $screen-md-min) { // Fix it to the bottom corner like how the nav is fixed to the top corners
+    position: fixed;
+    bottom: 41px;
+    right: $body-padding-h;
+    margin: 0;
+  }
+
+  > span {
+    display: inline-block;
+    padding: 0 2px;
+    margin: 0 2px;
+  }
+
+  .page {
+    &.current {
+      color: $link-hover-color;
+    }
+  }
+
+  .next,
+  .prev {
+    font-size: $font-size-large;
+    line-height: 1;
+  }
+}
 /* ==========================================================================
   Product Detail Page
   ========================================================================== */

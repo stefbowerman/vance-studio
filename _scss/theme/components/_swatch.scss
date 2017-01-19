@@ -9,7 +9,7 @@
   height: 12px;
   width: 12px;
   margin: 0 6px;
-  border: 1px solid transparent;
+  border: 1px solid $body-bg;
   background: {
     size: cover;
     repeat: no-repeat;
@@ -26,19 +26,19 @@
     border-color: darken(white, 15%);
   }
   &.swatch--black {
-    background-color: black;
+    background-color: #2E2E2E;
   }
   &.swatch--yellow {
-    background-color: yellow;
+    background-color: #DFCA2F;
   }
   &.swatch--red {
-    background-color: red;
+    background-color: #E31033;
   }
   &.swatch--blue {
-    background-color: blue;
+    background-color: #046499;
   }
   &.swatch--green {
-    background-color: green;
+    background-color: #30a532;
   }
 }
 
