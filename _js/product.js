@@ -53,6 +53,11 @@
       e.preventDefault();
 
       var $thumb = $(this);
+      
+      if($thumb.hasClass('current')){
+        return;
+      }
+
       var $thumbLink = $thumb.find('a');
       var srcRegular = $thumbLink.attr('href');
       var srcFullSize = $thumbLink.attr('data-fs');
@@ -66,6 +71,9 @@
       $img.attr('src', srcRegular);
 
       enableHoverZoom();
+
+      $productThumb.removeClass('current'); // remove from all
+      $thumb.addClass('current'); // add to clicked on one
       
     });
 

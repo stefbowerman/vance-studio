@@ -5,7 +5,7 @@
 /* START Product Photos */
 .product-photos {
   margin-bottom: 30px;
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $screen-lg-min) {
     margin-bottom: 0;
   }
 }
@@ -25,28 +25,32 @@
 }
 
 .product-photo-thumbs {
-  margin: 15px 0;
+  margin: 25px 0;
   text-align: center;
 }
 
 .product-photo-thumb {
   width: 76px;
   border: 1px solid $gray-lighter;
-  margin: 0 3px 6px;
+  margin: 0 5px 10px;
   display: inline-block;
-  padding: 3px;
+  cursor: pointer;
+
+  a {
+    display: block;
+    padding: 3px;
+  }
 }
 /* END Product Photos */
 
 .product-details {
+  @extend .sidebar;
 
-  @media (min-width: $screen-sm-min){
-    position: fixed;
-    right: $body-padding-h;
-    top: 48%;
-    transform: translateY(-50%);
-    width: calc( ( (100% - #{$main-column-max-width}) / 2 ) - #{$body-padding-h} - 20px );
-
+  @include center-block;
+  max-width: 400px;
+  
+  @media (min-width: $screen-lg-min){
+    max-width: none;
     .single-option-selector,
     .button,
     .product-details__description {

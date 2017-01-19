@@ -16,10 +16,17 @@
       $(this).attr('src', src).attr('width', width).removeAttr('height');
     });
 
-    /* Update cart page on blur of quantity input */
+    /* Update cart page on blur of quantity input only if the quantity gets changed */
     /*==========================*/ 
-    $('.cart-table').on('blur', '.cart-row__qty input', function(){
-      $('form[action="/cart"]').submit();
+    $('.cart-table').on('focus', '.cart-row__qty input', function(){
+      var $this = $(this);
+      var ogQty = $this.val();
+
+      $this.one('blur', function(event) {
+        if(ogQty != $this.val()){
+          $('form[action="/cart"]').submit();  
+        }
+      });
     });
 
   });

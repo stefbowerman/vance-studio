@@ -1,0 +1,15 @@
+.page-title {
+  display: none;
+  text-align: center;
+  font-size: $font-size-base;
+  font-weight: normal;
+}
+
+// Contact Page
+#contact {
+  .sidebar {
+    @media (max-width: $screen-md-max){
+      text-align: center
+    }
+  }
+}
