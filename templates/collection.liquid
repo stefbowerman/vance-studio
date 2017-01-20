@@ -6,22 +6,14 @@
 
 {% paginate collection.products by 10 %}
 
-{% comment %}
-  Re-use the .rte class wherever you output content that was added by a merchant using
-  the Rich Text Editor ( 'rte' stands for rich text editor ).
-  Style all HTML elements in that content the same way across the board.
-  Use the .rte class in your CSS to help maintain consistency.
-  Example: the h2 element should have the same size and color in:
-  - product descriptions
-  - collection descriptions
-  - page content
-  - blog post
-{% endcomment %}
 <div class="main-column">
-  <h1 class="left">{{ collection.title }}</h1>
+
+  {% unless collection.handle == 'all' %}
+    <h1 class="collection-title">{{ collection.title }}</h1>
+  {% endunless %}
 
   {% if collection.description.size > 0 %}
-  <div class="rte clearfix">
+  <div class="collection-description">
     {{ collection.description }}
   </div>
   {% endif %}
@@ -36,9 +28,10 @@
 
   {% if paginate.pages > 1 %}
   <div class="pagination centered">
-    {{ paginate | default_pagination }}
+    {{ paginate | default_pagination: next: '»', previous: '«' }}
   </div>
   {% endif %}
 
-  {% endpaginate %}
 </div>
+
+{% endpaginate %}

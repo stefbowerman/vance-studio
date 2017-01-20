@@ -1,0 +1,10 @@
+.collection-title,
+.collection-description {
+  margin: 0 0 30px;
+  font-size: $font-size-base;
+  text-align: center;
+}
+
+.collection-title + .collection-description {
+  margin-top: -15px;
+}
