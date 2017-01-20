@@ -1,4 +1,5 @@
 Lens Zoom
 Touch Zoom (iScroll)
-Create home page with banner image
 Mobile Menu
+Where does the header logo point to?
+Homepage settings for dark vs light logo
