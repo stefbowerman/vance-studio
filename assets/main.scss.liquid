@@ -69,6 +69,7 @@ $headings-color:          inherit !default;
 
 $zindex-logo:            1000 !default;
 $zindex-nav:             1000 !default;
+$zindex-blowup:          1050 !default;
 
 //== Media queries breakpoints
 //
@@ -1292,6 +1293,8 @@ footer {
     line-height: 1;
   }
 }
+// Based on template name.
+// Styles contained exclusively inside the named tempalate
 .collection-title,
 .collection-description {
   margin: 0 0 30px;
@@ -1345,6 +1348,87 @@ footer {
     padding: 3px;
   }
 }
+
+$product-blowup-dimension: 900px;
+
+body.product-blowup-open {
+  overflow: hidden;
+}
+
+.product-blowup {
+  position: absolute;
+  z-index: -$zindex-blowup;
+  bottom: -5300px;
+  left: 0;
+  right: 0;
+  background: $body-bg;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 150ms ease-in-out, z-index 150ms step-end;
+
+  &.is-active {
+    z-index: $zindex-blowup;
+    pointer-events: auto;
+    opacity: 1;
+    transition: opacity 150ms ease-in-out, z-index 150ms step-start;
+  }
+}
+
+.product-blowup__close {
+  position: absolute;
+  z-index: $zindex-blowup + 1;
+  top: 10px;
+  right: 10px;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:active,
+  &:focus {
+    color: $link-color;
+  }
+}
+
+.product-blowup__image {
+  position: absolute;
+  width: $product-blowup-dimension;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  margin-left: -($product-blowup-dimension / 2);
+  margin-top: -($product-blowup-dimension / 2);
+  max-width: none;
+}
+
+.product-blowup__scroll {
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  width: $product-blowup-dimension;
+  height: $product-blowup-dimension;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -o-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
 /* END Product Photos */
 
 .product-details {

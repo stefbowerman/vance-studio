@@ -1,5 +1,16 @@
 ;(function($, Modernizr, undefined){
 
+  // Global Namespace
+  window.Vance = {};
+
+  Vance.isTouch = function(){
+    console.log('checking if touch');
+    var touch = navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i);
+    console.log(touch);
+    return touch;
+    // return navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i);
+  };
+
   $(function(){
 
     /* Remove SVG images to avoid broken images in all browsers that don't support SVG. */

@@ -9,7 +9,7 @@
       <img 
         src="{{ product | img_url: '700x' }}" 
         srcset="
-                {{ product | img_url: '700x' }}, ''
+                {{ product | img_url: '700x' }},
                 {{ product | img_url: '900x' }} 800w"
         alt="{{ product.featured_image.alt | escape }}" class="product-list__product-img" />
     </a>

@@ -22,12 +22,12 @@
   {% for product in collection.products %}
     {% include 'product-list-product' %}
   {% else %}
-    <p>Nothing here - check back later</p>
+    <p class="text-center">Nothing here - check back later</p>
   {% endfor %}
   </ul>
 
   {% if paginate.pages > 1 %}
-  <div class="pagination centered">
+  <div class="pagination">
     {{ paginate | default_pagination: next: '»', previous: '«' }}
   </div>
   {% endif %}
