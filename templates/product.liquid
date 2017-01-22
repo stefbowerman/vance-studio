@@ -27,7 +27,7 @@
       <ul class="product-photo-thumbs">
         {% for image in product.images %}
         <li class="product-photo-thumb">
-          <a href="{{ image | img_url: '800x' }}" data-fs="{{ image | img_url: '1200x' }}">
+          <a href="{{ image | img_url: '800x' }}" data-zoom="{{ image | img_url: '1200x' }}">
             <img src="{{ image | img_url: '150x' }}" alt="{{ image.alt | escape }}" />
           </a>
         </li>
@@ -93,6 +93,13 @@
     </div><!-- .product-details -->
 
   </div>
+</div>
+
+<div class="product-blowup">
+  <div class="product-blowup__scroll">
+    <img class="product-blowup__image" />
+  </div>
+  <a href="#" class="product-blowup__close" title="Close">&times;</a>
 </div>
 
 {% comment %}
@@ -166,7 +173,6 @@
 
   });
 
-  Shopify.Image.preload({{ product.images | json }}, 'grande');
-  Shopify.Image.preload({{ product.images | json }}, '1024x1024');
+  Shopify.Image.preload({{ product.images | json }}, '800x');
 
 </script>
