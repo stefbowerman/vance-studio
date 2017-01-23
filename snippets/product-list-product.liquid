@@ -14,7 +14,7 @@
         alt="{{ product.featured_image.alt | escape }}" class="product-list__product-img" />
     </a>
     <div class="product-list__product-info">
-      <a href="{{ product.url }}" title="{{ product.title | escape }}">
+      <a href="{{ product.url }}" title="{{ product.title | escape }}" class="product-list__product-info-link">
         <span class="product-list__product-title">{{ product.title }} - </span>
         <span class="product-list__product-price">
           {% if product.price_varies %}From{% endif %}

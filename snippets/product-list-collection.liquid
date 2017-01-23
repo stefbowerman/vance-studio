@@ -1,0 +1,24 @@
+{% comment %} Possibly need to rename .product-list__* to something more generic to use for product + collections.  But for now just leave and understand that this snippet is for a collection {% endcomment %}
+
+<li class="product-list__product">
+
+  <a href="{{ collection.url }}">
+    {% if collection.image %}
+    <img 
+        src="{{ collection | img_url: '700x' }}" 
+        srcset="
+                {{ collection | img_url: '700x' }},
+                {{ collection | img_url: '900x' }} 800w" 
+        alt="{{ collection.image.alt | escape }}" class="product-list__product-img" />
+    {% else %}
+      <img src="{{ collection.products.first | img_url: 'grande' }}" alt="{{ collection.title | escape }}" class="product-list__product-img" />
+    {% endif %}
+  </a>
+  
+  <div class="product-list__product-info">
+    <a href="{{ collection.url }}">
+      {{ collection.title }}
+    </a>
+  </div>
+  
+</li>

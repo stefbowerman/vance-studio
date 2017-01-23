@@ -20,6 +20,12 @@
   @include clearfix;
 }
 
+.product-list__product-info-link {
+  @media (min-width: $screen-sm-min){
+    float: left;
+  }
+}
+
 .product-list__product-title {
   font-weight: bold;
   letter-spacing: $letter-spacing-large;
@@ -32,7 +38,7 @@
   display: block;
   margin-top: 6px;
 
-  @media (min-width: $screen-xs-min){ // TODO - Determine breakpoints ??
+  @media (min-width: $screen-sm-min){
     float: right;
     margin: 0;
   }

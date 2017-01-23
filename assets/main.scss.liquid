@@ -1110,23 +1110,13 @@ footer {
   }
 }
 
-.header-nav-mobile {
-  left: $body-padding-h;
-}
-
-.header-nav {
-  display: none;
-  left: $body-padding-h;
-
-  nav ul {
-    list-style: none;
-  }
-
+nav {
+  
   // Add a star to the active nav item
   li {
     position: relative;
     margin-bottom: 5px;
-    
+
     &.active {
 
       &:before {
@@ -1145,6 +1135,51 @@ footer {
       }
     }
   }
+}
+
+.header-nav-mobile {
+  left: $body-padding-h;
+
+  nav {
+    position: relative;
+    margin-top: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 100ms ease-out;
+
+    &:before {
+      content: "";
+      height: 22px;
+      width: 1px;
+      position: absolute;
+      top: -34px;
+      left: 2px;
+      background-color: $text-color;
+    }
+  }
+
+  @media (max-width: $screen-xs-max){
+    &.is-open {
+      nav {
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity 100ms ease-out;
+      }
+    }
+  }
+}
+
+.header-nav-mobile__toggle {
+  &:active,
+  &:focus,
+  &:hover {
+    color: $link-color;
+  }
+}
+
+.header-nav {
+  display: none;
+  left: $body-padding-h;
 }
 
 .header-cart {
@@ -1189,6 +1224,12 @@ footer {
   @include clearfix;
 }
 
+.product-list__product-info-link {
+  @media (min-width: $screen-sm-min){
+    float: left;
+  }
+}
+
 .product-list__product-title {
   font-weight: bold;
   letter-spacing: $letter-spacing-large;
@@ -1201,7 +1242,7 @@ footer {
   display: block;
   margin-top: 6px;
 
-  @media (min-width: $screen-xs-min){ // TODO - Determine breakpoints ??
+  @media (min-width: $screen-sm-min){
     float: right;
     margin: 0;
   }
@@ -1352,25 +1393,24 @@ footer {
 $product-blowup-dimension: 900px;
 
 body.product-blowup-open {
+  height: 100%;
   overflow: hidden;
 }
 
 .product-blowup {
   position: absolute;
   z-index: -$zindex-blowup;
-  bottom: -5300px;
+  bottom: 0;
   left: 0;
   right: 0;
   background: $body-bg;
   opacity: 0;
   overflow: hidden;
-  pointer-events: none;
   cursor: pointer;
   transition: opacity 150ms ease-in-out, z-index 150ms step-end;
 
   &.is-active {
     z-index: $zindex-blowup;
-    pointer-events: auto;
     opacity: 1;
     transition: opacity 150ms ease-in-out, z-index 150ms step-start;
   }
@@ -1390,7 +1430,8 @@ body.product-blowup-open {
   cursor: pointer;
 
   &:active,
-  &:focus {
+  &:focus,
+  &:hover {
     color: $link-color;
   }
 }
