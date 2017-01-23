@@ -6,10 +6,18 @@
   {% endif %}
 {% endcapture %}
 
+{% capture shop_link %}
+  {% if settings.default_shop_page != nil %}
+    {{ settings.default_shop_page }}
+  {% else %}
+    /collections/all
+  {% endif %}
+{% endcapture %}
+
 <div class="index-bg" style="background-image: url({{ bg_image | strip }})"></div>
 
 <div class="index-stuff">
-  <a href="/collections/all">
+  <a href="{{ shop_link }}">
     <div class="click-shield"></div>
     <img src="{{ 'logo-' | append: settings.index_logo_color | append: '.png' | asset_url }}" />
   </a>

@@ -1,7 +1,15 @@
+{% capture shop_link %}
+  {% if settings.default_shop_page != nil %}
+    {{ settings.default_shop_page }}
+  {% else %}
+    /collections/all
+  {% endif %}
+{% endcapture %}
+
 <header class="header">
 
   <div class="header-logo" role="banner" >
-    <a class="header-logo__link" href="/">
+    <a class="header-logo__link" href="{{ shop_link }}">
       <div class="click-shield"></div>
       <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="header-logo__img" />
     </a>
@@ -15,7 +23,8 @@
   </div>
 
   <div class="header-nav-mobile">
-    <a href="#">Menu</a>
+    <a href="#" class="header-nav-mobile__toggle">Menu</a>
+    {% include 'site-nav' %}
   </div>
 
   <div class="header-nav">

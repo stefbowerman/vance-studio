@@ -1,19 +1,27 @@
-{% include 'collection-listing' %}
+{% comment %} We probably won't ever need this template, needs more work if we do start using it. {% endcomment %}
 
-{% comment %}
+{% comment %}{% include 'collection-listing' %}{% endcomment %}
+
 <!-- Alternatively, if not using a snippet, use the code below. 
 To use the code below, get rid of the above 'include', and get rid of the comment tags, and you're in business. -->
 {% paginate collections by 6 %}
-  <h1>Collections</h1>
-  <ul class="grid clearfix">
-  {% for collection in collections %}
-    {% include 'collection-grid-item' with 'three-per-row' %}
-  {% endfor %}
+
+<div class="main-column">
+
+  <h1 class="collection-title">Collections</h1>
+
+  <ul class="product-list">
+    {% for collection in collections %}
+      {% include 'product-list-collection' %}
+    {% else %}
+      <p class="text-center">Nothing here - check back later</p>
+    {% endfor %}
   </ul>
+  
   {% if paginate.pages > 1 %}
-  <div id="pagination">
-    {{ paginate | default_pagination }}
+  <div class="pagination">
+    {{ paginate | default_pagination: next: '»', previous: '«' }}
   </div>
   {% endif %}
+
 {% endpaginate %}
-{% endcomment %}

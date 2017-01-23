@@ -1,5 +1,16 @@
 [
   {
+    "name": "General",
+    "settings": [
+      {
+        "type": "url",
+        "id": "default_shop_page",
+        "label": "Default Shop Page",
+        "info": "Where the landing page + header logos link to.  Default: 'collections/all'"
+      }
+    ]
+  },
+  {
     "name": "Homepage",
     "settings": [
       {
