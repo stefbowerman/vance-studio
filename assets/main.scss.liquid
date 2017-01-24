@@ -834,6 +834,7 @@ small,
 .text-lowercase      { text-transform: lowercase; }
 .text-uppercase      { text-transform: uppercase; }
 .text-capitalize     { text-transform: capitalize; }
+.text-strike         { text-decoration: line-through; }
 
 // Lists
 // -------------------------
@@ -1511,6 +1512,11 @@ body.product-blowup-open {
 
 .product-details__price {
   margin-bottom: 30px;
+  
+  .product-compare-price {
+    padding-left: 5px;
+    text-decoration: line-through;
+  }
 }
 
 .button--addtocart {

@@ -14,7 +14,7 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
 /* jshint ignore:end */
 
 // Start Product Page
-;(function($, Vance, Modernizr, undefined){
+;(function($, Vance, Modernizr, Shopify, ProductPageConfig, undefined){
 
   /**
    * Used to control the image zoom behavior on the product page
@@ -252,7 +252,64 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
     return this.init();
   }
 
+  var onVariantSelected = function(variant, selector) {
+    var $add = $('#add');
+    var $price = $('#product-price');
+    var $priceAmt = $price.find('.product-price');
+    var $priceCompAmt = $price.find('.product-compare-price');
+
+    if (variant) {
+      
+      $price.show();
+      
+      // Selected a valid variant that is available.
+      if (variant.available) {
+        $add.val(ProductPageConfig.msg.addToCart).removeClass('disabled').prop('disabled', false);
+      } else {
+        $add.val(ProductPageConfig.msg.soldOut).addClass('disabled').prop('disabled', true);       
+      }
+      
+      // Whether the variant is in stock or not, we can update the price and compare at price.
+      $priceAmt.text( Shopify.formatMoney(variant.price, ProductPageConfig.moneyFormat) );
+      if ( variant.compare_at_price > variant.price ) {
+        $priceCompAmt.text( Shopify.formatMoney(variant.compare_at_price, ProductPageConfig.moneyFormat) );
+      } else {
+        $priceCompAmt.text('');
+      }        
+
+    } else { // variant doesn't exist.
+    
+      $price.hide();
+      $add.val(ProductPageConfig.msg.unavailable).addClass('disabled').prop('disabled', true);
+    }
+
+  };
+
+  // Pre-Dom Ready
+  Shopify.Image.preload(ProductPageConfig.product.images, ProductPageConfig.photoMainDimenion);
+
+  // Dom Ready
   $(function(){
+
+    var product = ProductPageConfig.product;
+
+    new Shopify.OptionSelectors('product-select', {
+      product: product, 
+      onVariantSelected: onVariantSelected, 
+      enableHistoryState: true
+    });
+
+    $('.single-option-selector').addClass('form-control');
+
+    // Add label if only one product option and it isn't 'Title'.
+    if(product.options.length == 1 && product.options[0] !== "Title") {  
+      $('.selector-wrapper').first().prepend('<label>' + product.options[0] + '</label>');
+    }
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    if(product.variants.length == 1 && product.variants[0].title.indexOf("Default") !== -1){  
+      $('#product-variants').hide();
+    }
 
     var productImageZoomController = new ProductImageZoomController({
       touch: Vance.isTouch()
@@ -264,4 +321,4 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
 
   });
 
-})(jQuery, Vance, Modernizr);
+})(jQuery, Vance, Modernizr, Shopify, ProductPageConfig);
