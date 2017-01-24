@@ -163,6 +163,11 @@ body.product-blowup-open {
 
 .product-details__price {
   margin-bottom: 30px;
+  
+  .product-compare-price {
+    padding-left: 5px;
+    text-decoration: line-through;
+  }
 }
 
 .button--addtocart {
