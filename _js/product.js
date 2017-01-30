@@ -57,37 +57,53 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
       // Kill in case we have an existing instance
       $productPhotoMain.trigger('zoom.destroy');
 
-      $productPhotoMain.zoom({
-        url: $productPhotoMainLink.attr('href'),
-        magnify: 0.8,
-        on: 'click',
-        duration: 150,
-        touch: false,
-        callback: function(){
-          $productPhotoMain.addClass('is-zoomable'); // Let the dom know that zoom is enabled
-        },
-        onZoomIn: function(){
-          zoomedIn = true;
-          $productPhotoMain.addClass('is-zoomed');
-          $document.on('keyup.hoverZoom', function(e){
-            if(e.keyCode === ESC_KEY){
-              _this.hoverZoomOut.apply(_this);
-            }
-          });
-        },
-        onZoomOut: function(){
-          zoomedIn = false;
-          $productPhotoMain.removeClass('is-zoomed');
-          $document.off('keyup.hoverZoom');
-        }
-      });
+      var loadTest = new Image();
+      var zoomSrc = $productPhotoMainLink.attr('href');
 
-      // Kill the zoom once you leave the square
-      $productPhotoMain.on('mouseleave', _this.hoverZoomOut.bind(_this));
+      function zoomImgLoadedCallback(){
+        
+        $productPhotoMain.zoom({
+          url: zoomSrc,
+          magnify: 0.8,
+          on: 'click',
+          duration: 150,
+          touch: false,
+          callback: function(){
+            $productPhotoMain.addClass('is-zoomable'); // Let the dom know that zoom is enabled
+          },
+          onZoomIn: function(){
+            zoomedIn = true;
+            $productPhotoMain.addClass('is-zoomed');
+            $document.on('keyup.hoverZoom', function(e){
+              if(e.keyCode === ESC_KEY){
+                _this.hoverZoomOut.apply(_this);
+              }
+            });
+          },
+          onZoomOut: function(){
+            zoomedIn = false;
+            $productPhotoMain.removeClass('is-zoomed');
+            $document.off('keyup.hoverZoom');
+          }
+        });
+
+        // Kill the zoom once you leave the square
+        $productPhotoMain.on('mouseleave', _this.hoverZoomOut.bind(_this));
+      }
+
+      if(loadTest.addEventListener){
+        loadTest.addEventListener('load', zoomImgLoadedCallback);
+      }
+      else {
+        loadTest.attachEvent('onload', zoomImgLoadedCallback);
+      }
+
+      loadTest.src = zoomSrc;
     };
 
     this.destroyHoverZoom = function(){
       $productPhotoMain.trigger('zoom.destroy');
+      $productPhotoMain.removeClass('is-zoomable');
       $productPhotoMain.removeClass('is-zoomed');
     };
 
