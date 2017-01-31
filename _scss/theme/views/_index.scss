@@ -46,6 +46,8 @@
 
   img {
     @include center-block;
+    width: 450px;
+    max-width: 100%;
     padding: 0 25px;
   }
 }
