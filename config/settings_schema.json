@@ -14,10 +14,6 @@
    "name": "Currency",
    "settings": [
       {
-        "type": "paragraph",
-        "content": "To offer multiple currencies on your online store, you must first [edit your store's currency formatting](https://help.shopify.com/manual/using-themes/troubleshooting/help-script-find-money-formats)."
-      },
-      {
         "type": "checkbox",
         "id": "show_multiple_currencies",
         "label": "Enable currency conversion",
