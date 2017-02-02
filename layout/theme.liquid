@@ -55,7 +55,11 @@
     <main class="main" role="main">
       {{ content_for_layout }}
     </main>
-      
+
+    {% include 'footer' %}
+   
+    {% include 'currencies' %}
+    
     {{ 'app.js'  | asset_url | script_tag }}
 
     {% if template contains 'product' %}

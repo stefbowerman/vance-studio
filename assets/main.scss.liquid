@@ -38,6 +38,7 @@ $font-family-base:        $font-family-sans-serif !default;
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default;
 $font-size-small:         ceil(($font-size-base * 0.85)) !default;
+$font-size-smaller:       ceil(($font-size-base * 0.75)) !default;
 
 $font-size-h1:            floor(($font-size-base * 2.6)) !default;
 $font-size-h2:            floor(($font-size-base * 2.15)) !default;
@@ -69,6 +70,7 @@ $headings-color:          inherit !default;
 
 $zindex-logo:            1000 !default;
 $zindex-nav:             1000 !default;
+$zindex-footer:          1000 !default;
 $zindex-blowup:          1050 !default;
 
 //== Media queries breakpoints
@@ -823,6 +825,10 @@ small,
   font-size: floor((100% * $font-size-small / $font-size-base));
 }
 
+.smaller {
+  font-size: floor((100% * $font-size-smaller / $font-size-base)); // ~ 78%
+}
+
 // Alignment
 .text-left           { text-align: left; }
 .text-right          { text-align: right; }
@@ -1076,7 +1082,15 @@ input[type="button"] {
   }
 }
 footer {
-
+  padding: 20px $body-padding-h;
+  text-align: center;
+  @media (min-width: $screen-sm-min) {
+    position: fixed;
+    bottom: 42px;
+    left: $body-padding-h;
+    padding: 0;
+    z-index: $zindex-footer;
+  }
 }
 .header {
   letter-spacing: $letter-spacing-large;
@@ -1337,6 +1351,25 @@ nav {
     font-size: $font-size-large;
     line-height: 1;
   }
+}
+
+// Mini currency selector
+#currency-select {
+  display: inline-block;
+  width: auto;
+  padding: 4px 26px 2px 8px;
+  font-size: $font-size-smaller;
+  font-weight: normal;
+  background-size: auto 5px;
+  background-position: right 7px top 50%;
+
+  // opacity: 0.5;
+
+  // &:hover,
+  // &:focus,
+  // &:active {
+  //   opacity: 1;
+  // }
 }
 // Based on template name.
 // Styles contained exclusively inside the named tempalate
@@ -1622,6 +1655,13 @@ body.product-blowup-open {
       width: auto;
     }
   }
+
+  .cart-currency-note {
+    margin-top: 20px;
+    padding: 0 20px;
+    font-size: $font-size-smaller;
+    text-align: center;
+  }
 }
 .page-title {
   display: none;
@@ -1640,7 +1680,8 @@ body.product-blowup-open {
 }
 // Home page gets full bleed bg and x+y center'd logo
 .template-index {
-  .header {
+  .header,
+  footer {
     display: none;
   }
 

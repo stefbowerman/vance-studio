@@ -4,3 +4,22 @@
 @import url("components/_product-list.scss");
 @import url("components/_swatch.scss");
 @import url("components/_pagination.scss");
+
+// Mini currency selector
+#currency-select {
+  display: inline-block;
+  width: auto;
+  padding: 4px 26px 2px 8px;
+  font-size: $font-size-smaller;
+  font-weight: normal;
+  background-size: auto 5px;
+  background-position: right 7px top 50%;
+
+  // opacity: 0.5;
+
+  // &:hover,
+  // &:focus,
+  // &:active {
+  //   opacity: 1;
+  // }
+}

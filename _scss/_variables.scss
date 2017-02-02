@@ -38,6 +38,7 @@ $font-family-base:        $font-family-sans-serif !default;
 $font-size-base:          14px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default;
 $font-size-small:         ceil(($font-size-base * 0.85)) !default;
+$font-size-smaller:       ceil(($font-size-base * 0.75)) !default;
 
 $font-size-h1:            floor(($font-size-base * 2.6)) !default;
 $font-size-h2:            floor(($font-size-base * 2.15)) !default;
@@ -69,6 +70,7 @@ $headings-color:          inherit !default;
 
 $zindex-logo:            1000 !default;
 $zindex-nav:             1000 !default;
+$zindex-footer:          1000 !default;
 $zindex-blowup:          1050 !default;
 
 //== Media queries breakpoints

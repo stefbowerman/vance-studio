@@ -1,0 +1,84 @@
+{% if settings.show_multiple_currencies %}
+
+  {{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+  {{ "jquery.currencies.js" | asset_url | script_tag }}
+
+  <script type="text/javascript">
+    (function($, Currency, undefined){
+
+      var shopCurrency = '{{ shop.currency }}';
+      var cookieCurrency = Currency.cookie.read(); /* Cookie currency */
+      var convertMoneySelector = '[data-convert-money]'; /* Selects elements that should be converted */
+      var $currencySelect = $('#currency-select'); /* Select box to change currency */
+      var $selectedCurrency = $('.selected-currency'); /* text node displaying the currently selected text */
+      var $cartCurrencyNote = $('.cart-currency-note') || null; /* Note about currency on the cart page */
+
+      /* Sometimes merchants change their shop currency, let's tell our JavaScript file */
+      Currency.format = '{{ settings.currency_format | default: 'money_with_currency_format' }}';
+      Currency.moneyFormats[shopCurrency].money_with_currency_format = {{ shop.money_with_currency_format | strip_html | json }};
+      Currency.moneyFormats[shopCurrency].money_format = {{ shop.money_format | strip_html | json }};
+
+      // Wrapper around Currency.convertAll to convert numbers and do post-conversion callback
+      function convertAll(oldCurrency, newCurrency){
+        var format = (newCurrency === shopCurrency ? 'money_format' : null); // If we're converting to the normal shop currency, we don't need the format with currency
+        Currency.convertAll(oldCurrency, newCurrency, convertMoneySelector, format); // Updates window.Currency.currentCurrency - see jquery.currencies.js
+        postConvertAll();
+      }
+
+      function postConvertAll(){
+        $selectedCurrency.text(Currency.currentCurrency);
+        if($cartCurrencyNote){
+          if(Currency.currentCurrency !== shopCurrency){
+            $cartCurrencyNote.show();
+          }
+          else {
+            $cartCurrencyNote.hide();
+          }
+        }
+      }
+
+      // Initialize the currency changer stuff
+      (function init(){
+      
+        // If there's no cookie, don't do anything
+        if(cookieCurrency == null){
+          Currency.currentCurrency = shopCurrency;
+        }
+        else {
+          // If the cookie is set to the shop currency anyways, don't do anything
+          if(cookieCurrency === shopCurrency){
+            Currency.currentCurrency = shopCurrency;
+          }
+          // If the cookie value does not correspond to any value in the currency dropdown.
+          // This is a corner case that would only occur if a customer has a currency set and then we remove that option
+          else if ($currencySelect.size() && !$currencySelect.find('option[value=' + cookieCurrency + ']').size()){
+            Currency.currentCurrency = shopCurrency;
+            Currency.cookie.write(shopCurrency);
+          }
+          else {
+            convertAll(shopCurrency, cookieCurrency);
+          }
+        }
+
+        // Update select box now that we've set Currency.currentCurrency
+        $currencySelect.val(Currency.currentCurrency);
+        
+        // Attach onChange to currency select box
+        $currencySelect.on('change', function() {
+          convertAll(Currency.currentCurrency, $(this).val());
+        });
+
+        // Hook into variant selected event from the product page
+        $(window).on('variantSelected.productPage', function(){
+          convertAll(shopCurrency, Currency.currentCurrency); // Since variant selected updates the price for that specific variant in shop currency, we need to convert it after
+        });
+
+        postConvertAll(); // Just to make sure that the page is cleaned up
+
+      })();
+
+    })(jQuery, Currency);
+
+  </script>
+
+{% endif %}

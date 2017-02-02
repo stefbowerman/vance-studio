@@ -65,7 +65,7 @@
             <td class="cart-row__remove">
               <a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove</a>
             </td>
-            <td class="cart-row__total">{{ item.line_price | money }}</td>
+            <td class="cart-row__total" data-convert-money>{{ item.line_price | money }}</td>
           </tr>
         {% endfor %}
         
@@ -74,17 +74,23 @@
       </table>
 
       <div class="cart-footer" style="margin-top: 40px;">
-        <h3 style="text-align: right;">{{ cart.total_price | money }}</h3>
-        {% comment %}
-        Add JS to handle quantity change?
-        <input type="submit" name="update" value="Update cart" class="btn" />
-        {% endcomment %}
-        <input type="submit" name="checkout" value="Check Out" class="button button--checkout" />    
-        {% comment %}Paypal and Google checkout buttons{% endcomment %}
-        {% if additional_checkout_buttons %}
-        <p class="additional-checkout-buttons">
-          {{ content_for_additional_checkout_buttons }}
-        </p>
+        <h3 class="text-right" data-convert-money>{{ cart.total_price | money }}</h3>
+        <div class="clearfix">
+          <input type="submit" name="checkout" value="Check Out" class="button button--checkout" />    
+          {% comment %}Paypal and Google checkout buttons{% endcomment %}
+          {% if additional_checkout_buttons %}
+          <p class="additional-checkout-buttons">
+            {{ content_for_additional_checkout_buttons }}
+          </p>
+          {% endif %}
+        </div>
+        {% if settings.show_multiple_currencies %}
+          <div class="cart-currency-note">
+            <p><strong>Note</strong></p>
+            <p>Our store processes all orders in <strong>{{ shop.currency }}</strong></p>
+            <p>While the contents of your cart is currently displayed in <strong class="selected-currency"></strong>, you will check out using <strong>{{ shop.currency }}</strong> at the most current exchange rate.
+            </p>
+          </div>
         {% endif %}
       </div>
 

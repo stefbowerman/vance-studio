@@ -16,6 +16,11 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
 // Start Product Page
 ;(function($, Vance, Modernizr, Shopify, ProductPageConfig, undefined){
 
+  var EVENT_KEY = '.productPage';
+  var event = {
+    variantSelected: 'variantSelected' + EVENT_KEY
+  };
+
   /**
    * Used to control the image zoom behavior on the product page
    *
@@ -288,9 +293,9 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
       // Whether the variant is in stock or not, we can update the price and compare at price.
       $priceAmt.text( Shopify.formatMoney(variant.price, ProductPageConfig.moneyFormat) );
       if ( variant.compare_at_price > variant.price ) {
-        $priceCompAmt.text( Shopify.formatMoney(variant.compare_at_price, ProductPageConfig.moneyFormat) );
+        $priceCompAmt.html( Shopify.formatMoney(variant.compare_at_price, ProductPageConfig.moneyFormat) ).show();
       } else {
-        $priceCompAmt.text('');
+        $priceCompAmt.text('').hide();
       }        
 
     } else { // variant doesn't exist.
@@ -298,6 +303,9 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
       $price.hide();
       $add.val(ProductPageConfig.msg.unavailable).addClass('disabled').prop('disabled', true);
     }
+
+    // Trigger window event to hook into
+    $(window).trigger(event.variantSelected, variant);
 
   };
 

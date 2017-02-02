@@ -1,16 +1,35 @@
 {
-  "current": "Carcass",
+  "current": {
+    "default_shop_page": "",
+    "index_bg_image": "",
+    "index_logo_color": "white",
+    "social_instagram_link": "vancestudio",
+    "social_facebook_link": "",
+    "checkout_header_image": "shopify:\/\/shop_images\/checkout-banner.jpg",
+    "checkout_logo_image": "shopify:\/\/shop_images\/logo-large-white.png",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "large",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "Source Sans Pro",
+    "checkout_body_font": "Source Sans Pro",
+    "checkout_accent_color": "#000000",
+    "checkout_button_color": "#000000",
+    "checkout_error_color": "#ff0000",
+    "use_logo": false,
+    "checkout_use_storefront_logo": false,
+    "customer_layout": "theme",
+    "social_twitter_link": "",
+    "content_for_index": [
+    ]
+  },
   "presets": {
     "Carcass": {
       "customer_layout": "theme",
-      "background_color": "#FFF",
-      "text_color": "#333",
-      "link_color": "#B72206",
       "use_logo": false,
-      "homepage_page": "frontpage",
-      "homepage_collection": "frontpage",
-      "products_per_row": "3",
-      "number_of_rows": "4",
       "social_facebook_link": "",
       "social_instagram_link": "",
       "social_twitter_link": ""
