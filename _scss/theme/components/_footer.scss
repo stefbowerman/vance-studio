@@ -1,3 +1,11 @@
 footer {
-
+  padding: 20px $body-padding-h;
+  text-align: center;
+  @media (min-width: $screen-sm-min) {
+    position: fixed;
+    bottom: 42px;
+    left: $body-padding-h;
+    padding: 0;
+    z-index: $zindex-footer;
+  }
 }

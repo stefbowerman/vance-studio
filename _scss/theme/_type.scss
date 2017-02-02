@@ -51,6 +51,10 @@ small,
   font-size: floor((100% * $font-size-small / $font-size-base));
 }
 
+.smaller {
+  font-size: floor((100% * $font-size-smaller / $font-size-base)); // ~ 78%
+}
+
 // Alignment
 .text-left           { text-align: left; }
 .text-right          { text-align: right; }

@@ -2,6 +2,8 @@
 
 Shopify theme for vancestudios.com
 
+Includes a theme option to allow customers to swap between currencies.  In order for this to work, dollar amounts that are displayed to the customer must be wrapped with an element with data attribute ``data-convert-money`` ```i.e. <span data-convert-money>{{ product.price | money }}</span>```.  [Click here for the customization instructions](https://help.shopify.com/themes/customization/currencies/show-multiple-currencies).
+
 ### Project Structure
 ```
 ├── _js

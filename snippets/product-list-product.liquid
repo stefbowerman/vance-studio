@@ -18,9 +18,9 @@
         <span class="product-list__product-title">{{ product.title }} - </span>
         <span class="product-list__product-price">
           {% if product.price_varies %}From{% endif %}
-          {{ product.price | money }}
+            <span data-convert-money>{{ product.price | money }}</span>
           {% if on_sale %}
-            <span class="compare-at-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span>
+            <span class="compare-at-price" data-convert-money style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span>
           {% endif %}
         </span>
       </a>

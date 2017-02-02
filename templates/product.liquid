@@ -56,8 +56,10 @@
       <h1 itemprop="name" class="product-details__title">{{ product.title }}</h1>
       
       <div id="product-price" class="product-details__price">
-        <span class="product-price" itemprop="price">{{ variant.price | money }}</span>
-        <span class="product-compare-price">{% if product.compare_at_price > product.price %}{{ variant.compare_at_price | money }}{% endif %}</span>
+        <span class="product-price" data-convert-money itemprop="price">{{ variant.price | money }}</span>
+        <span class="product-compare-price" data-convert-money>
+          {% if product.compare_at_price > product.price %}{{ variant.compare_at_price | money }}{% endif %}
+        </span>
       </div>
       
       {% assign hide_default_title = false %}
@@ -71,7 +73,7 @@
           <select id="product-select" name="id" class="form-control">
           {% for variant in product.variants %}
             <option{% if variant == product.selected_or_first_available_variant %} selected{% endif %} value="{{ variant.id }}">
-            {{ variant.title }} - {{ variant.price | money }}
+            {{ variant.title }}
             </option>
           {% endfor %}
           </select>
