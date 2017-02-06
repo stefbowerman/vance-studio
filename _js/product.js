@@ -120,7 +120,7 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
     };
 
     this.touchZoomIn = function(){
-      console.log('doing touch zoom');
+      // console.log('doing touch zoom');
       
       if(zoomedIn) return;
 
@@ -145,7 +145,7 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
       }
 
       // set the minZoom based on the smallest dimension of the screen to ensure the whole image fits
-      zoomMin = (winHeight >= winWidth ? winWidth : winHeight) / 900;
+      zoomMin = (winHeight >= winWidth ? winWidth : winHeight) / 1000;
 
       iScroll = new IScroll($productBlowUp.get(0), {
         zoom: true,
@@ -153,10 +153,10 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
         scrollY: canZoom,
         freeScroll: true,
         zoomMin: zoomMin,
-        zoomMax: Vance.isRetina() ? 0.75 : 1, // keep somewhat compressed if high quality screen
+        zoomMax: Vance.isRetina() ? 0.85 : 1, // keep somewhat compressed if high quality screen
         startZoom: initialZoom,
-        startX: (winWidth / 2) - ((initialZoom * 900) / 2), // 900 is the zoomed image dimension
-        startY: (winHeight / 2) - ((initialZoom * 900) / 2) // 900 is the zoomed image dimension
+        startX: (winWidth / 2) - ((initialZoom * 1000) / 2), // 900 is the zoomed image dimension
+        startY: (winHeight / 2) - ((initialZoom * 1000) / 2) // 900 is the zoomed image dimension
       });
       
       $body.addClass('product-blowup-open');
@@ -334,6 +334,14 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
     if(product.variants.length == 1 && product.variants[0].title.indexOf("Default") !== -1){  
       $('#product-variants').hide();
     }
+
+    // Show the label if it's for size
+    $('.selector-wrapper').each(function(index, el) {
+      var $label = $(this).find('label');
+      if($label.size() && $label.text().toLowerCase().indexOf("size") !== -1){
+        $label.show();
+      }
+    });
 
     var productImageZoomController = new ProductImageZoomController({
       touch: Vance.isTouch()

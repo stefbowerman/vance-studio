@@ -5,12 +5,22 @@
 
   <li class="product-list__product">
     <a href="{{ product.url }}" title="{{ product.title | escape }}">
-      {% comment %} Adjust these src's as we adjust the site breakpoints {% endcomment %}
+      {% comment %}
+        Let's cheat a little bit here and force hi-res images for desktop screens by defining the container
+        (number in 'sizes' media-query) to be bigger than it actually is.  We do this because shopify compresses
+        our images on upload and makes them look pixelated when viewing at 1x.  Better to scale them down and get more detail.
+      {% endcomment %}
       <img 
-        src="{{ product | img_url: '700x' }}" 
+        src="{{ product | img_url: '800x' }}"
         srcset="
-                {{ product | img_url: '700x' }},
-                {{ product | img_url: '900x' }} 800w"
+                {{ product | img_url: '400x' }} 400w,
+                {{ product | img_url: '800x' }} 800w,
+                {{ product | img_url: '900x' }} 900w,
+                {{ product | img_url: '1100x' }} 1100w,
+                {{ product | img_url: '1600x' }} 1600w"
+        sizes="(max-width: 599px) 390px,
+               (max-width: 767px) 795px,
+               1100px"
         alt="{{ product.featured_image.alt | escape }}" class="product-list__product-img" />
     </a>
     <div class="product-list__product-info">
