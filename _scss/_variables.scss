@@ -101,6 +101,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 //** Horizontal line color.
 $hr-border:                   $gray-lighter !default;
+$table-border-color:          $text-color;
 
 $main-column-max-width:       580px;
 $body-padding-h:              35px;
