@@ -145,6 +145,37 @@ body.product-blowup-open {
 
 }
 
+
+.size-guide-toggle {
+  display: inline-block;
+  margin: 20px 0 10px;
+  &:active,
+  &:focus {
+    color: $text-color;
+  }
+}
+
+// Match width with .product-details
+.size-guide {
+  @include center-block;
+  max-width: 400px;
+  display: none;  
+  @media (min-width: $screen-lg-min){
+    max-width: none;
+  }
+
+  &.is-visible {
+    display: block;
+  }
+}
+
+.size-guide-table {
+  th, td {
+    width: auto !important;
+    height: auto !important;
+  }
+}
+
 /* Quickly hiding default variant drop-down when JavaScript is enabled */
 /* See this: http://www.learningjquery.com/2008/10/1-way-to-avoid-the-flash-of-unstyled-content/ */
 .js #product-select { display: none; }

@@ -66,6 +66,17 @@
     ]
   },
   {
+    "name": "Product Page",
+    "settings": [
+      {
+        "type": "page",
+        "id": "size_guide_page",
+        "label": "Size Guide Page",
+        "info": "Page containing the size guide"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {

@@ -4,6 +4,27 @@
 {% assign photo_main_dimension = '900x' %}
 {% assign photo_zoom_dimension = '1200x' %}
 
+{% comment %} Size guide variables {% endcomment %}
+{% assign size_options = 'size' | split: ',' %}
+{% assign has_size = false %}
+{% for option in product.options %}  
+  {% assign downcased_option = option | downcase %}
+  {% if has_size == false and size_options contains downcased_option %}
+    {% assign has_size = true %}
+  {% endif %}
+{% endfor %}
+
+{% assign has_size_guide = false %}
+{% if pages[settings.size_guide_page] != empty %}
+{% assign has_size_guide = true %}
+{% endif %}
+
+{% assign show_size_guide = false %}
+{% if has_size_guide and has_size %}
+  {% assign show_size_guide = true %}
+{% endif %}
+{% comment %} End size guide{% endcomment %}
+
 <div class="main-column">
   <div class="product" itemscope itemtype="http://schema.org/Product">
 
@@ -88,16 +109,24 @@
 
       <div id="product-description" class="product-details__description rte" itemprop="description">
         {{ product.description }}
-
-        {% comment %} Throw the ize guide in somewhere here {% endcomment %}
-        <table class="table small size-guide" style="margin: 30px 0 10px;">
-          <thead><tr><th>Size</th><th style="text-align: center;">1</th><th style="text-align: center;">2</th><th style="text-align: center;">3</th></tr></thead>
-          <tbody><tr><th scope="row">Inseam (cm)</th><td style="text-align: center;">76.5</td><td style="text-align: center;">81.5</td><td style="text-align: center;">86.5</td></tr></tbody>
-        </table>
-
       </div>
       
+      {% if show_size_guide %}
+        <a href="#" class="size-guide-toggle">
+          <strong>
+            <span style="display: none">Hide Size Guide</span>
+            <span>Show Size Guide</span>
+          </strong>
+        </a>
+      {% endif %}
+      
     </div><!-- .product-details -->
+    
+    {% if show_size_guide %}
+      <div class="size-guide small">
+        {{ pages[settings.size_guide_page].content }}
+      </div>
+    {% endif %}
 
   </div>
 </div>
