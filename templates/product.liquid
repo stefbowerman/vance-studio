@@ -4,27 +4,6 @@
 {% assign photo_main_dimension = '900x' %}
 {% assign photo_zoom_dimension = '1200x' %}
 
-{% comment %} Size guide variables {% endcomment %}
-{% assign size_options = 'size' | split: ',' %}
-{% assign has_size = false %}
-{% for option in product.options %}  
-  {% assign downcased_option = option | downcase %}
-  {% if has_size == false and size_options contains downcased_option %}
-    {% assign has_size = true %}
-  {% endif %}
-{% endfor %}
-
-{% assign has_size_guide = false %}
-{% if pages[settings.size_guide_page] != empty %}
-{% assign has_size_guide = true %}
-{% endif %}
-
-{% assign show_size_guide = false %}
-{% if has_size_guide and has_size %}
-  {% assign show_size_guide = true %}
-{% endif %}
-{% comment %} End size guide{% endcomment %}
-
 <div class="main-column">
   <div class="product" itemscope itemtype="http://schema.org/Product">
 
@@ -111,22 +90,9 @@
         {{ product.description }}
       </div>
       
-      {% if show_size_guide %}
-        <a href="#" class="size-guide-toggle">
-          <strong>
-            <span style="display: none">Hide Size Guide</span>
-            <span>Show Size Guide</span>
-          </strong>
-        </a>
-      {% endif %}
+      {% include 'size-guide' %}
       
     </div><!-- .product-details -->
-    
-    {% if show_size_guide %}
-      <div class="size-guide small">
-        {{ pages[settings.size_guide_page].content }}
-      </div>
-    {% endif %}
 
   </div>
 </div>
