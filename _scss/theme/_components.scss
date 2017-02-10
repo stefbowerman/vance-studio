@@ -22,4 +22,12 @@
   // &:active {
   //   opacity: 1;
   // }
+
+  // Only show the currency selector on relevant pages
+  display: none;
+  .template-collection &,
+  .template-product &,
+  .template-cart & {
+    display: block;
+  }
 }
