@@ -145,7 +145,6 @@ body.product-blowup-open {
 
 }
 
-
 .size-guide-toggle {
   display: inline-block;
   margin: 20px 0 10px;
@@ -157,22 +156,18 @@ body.product-blowup-open {
 
 // Match width with .product-details
 .size-guide {
-  @include center-block;
-  max-width: 400px;
-  display: none;  
-  @media (min-width: $screen-lg-min){
-    max-width: none;
-  }
+  width: 550px;
+  max-width: 100%;
+  font-size: $font-size-small;
 
-  &.is-visible {
-    display: block;
-  }
-}
-
-.size-guide-table {
-  th, td {
-    width: auto !important;
-    height: auto !important;
+  table {
+    th, td {
+      width: auto !important;
+      height: auto !important;
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 }
 

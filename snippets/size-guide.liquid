@@ -1,0 +1,34 @@
+{% if template contains 'product' %}
+
+  {% assign size_options = 'size' | split: ',' %}
+  {% assign has_size = false %}
+  {% for option in product.options %}  
+    {% assign downcased_option = option | downcase %}
+    {% if has_size == false and size_options contains downcased_option %}
+      {% assign has_size = true %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign has_size_guide = false %}
+  {% if pages[settings.size_guide_page] != empty %}
+  {% assign has_size_guide = true %}
+  {% endif %}
+
+  {% assign show_size_guide = false %}
+  {% if has_size_guide and has_size %}
+    {% assign show_size_guide = true %}
+  {% endif %}
+
+  {% if show_size_guide %}
+    <a href="#" class="size-guide-toggle" data-featherlight="#size-guide-popup">
+      <strong>Size Guide</strong>
+    </a>
+    
+    <div id="size-guide-popup" class="featherlight-dom">
+      <div class="size-guide">
+        {{ pages[settings.size_guide_page].content }}
+      </div>
+    </div>
+  {% endif %}
+
+{% endif %}

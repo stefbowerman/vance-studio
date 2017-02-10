@@ -352,22 +352,10 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
     });
 
     /* Size Guide toggle stuff */
-    var $sizeGuide = $('.size-guide');
-    var $sizeGuideTable = $sizeGuide.find('table');
-    var $sizeGuideToggle = $('.size-guide-toggle');
-
-    if($sizeGuide && $sizeGuideToggle){
-      $sizeGuideToggle.on('click', function(){
-        $sizeGuideToggle.find('span').toggle();
-        $sizeGuideToggle.blur();
-        $sizeGuide.toggleClass('is-visible');
-        return false;
-      });
-
-      if($sizeGuideTable){
-        $sizeGuideTable.addClass('table size-guide-table');
-      }
-    }
+    $('.size-guide').find('table').addClass('table');
+    $('.size-guide-toggle').on('click', function(){
+      $(this).blur();
+    });
 
   });
 
