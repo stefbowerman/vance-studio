@@ -1,16 +1,5 @@
 [
   {
-    "name": "General",
-    "settings": [
-      {
-        "type": "url",
-        "id": "default_shop_page",
-        "label": "Default Shop Page",
-        "info": "Where the landing page + header logos link to.  Default: 'collections/all'"
-      }
-    ]
-  },
-  {
    "name": "Currency",
    "settings": [
       {
@@ -49,19 +38,14 @@
     "name": "Homepage",
     "settings": [
       {
-        "type": "image_picker",
-        "id": "index_bg_image",
-        "label": "Homepage Background Image"
+        "type": "header",
+        "content": "Featured collection"
       },
       {
-        "type": "radio",
-        "id": "index_logo_color",
-        "label": "Homepage Logo Color",
-        "options": [
-          { "value": "white", "label": "White" },
-          { "value": "black", "label": "Black" }
-        ],
-        "default": "white"
+        "type": "collection",
+        "id": "homepage_collection",
+        "label": "Feature products from this collection",
+        "info": "If 'none' is selected, page will default to all products"
       }
     ]
   },

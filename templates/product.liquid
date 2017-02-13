@@ -1,4 +1,4 @@
-{% assign add_to_cart = 'Add to cart' %}
+{% assign add_to_cart = 'Add to Bag' %}
 {% assign sold_out    = 'Sold Out' %}
 {% assign unavailable = 'Unavailable' %}
 {% assign photo_main_dimension = '900x' %}
@@ -12,7 +12,7 @@
     {% if product.images.size == 0 %}
   
       <div class="product-photo__main">
-        <img src="{{ '' | img_url: 'grande' }}" alt="" />
+        <img src="{{ '' | img_url: photo_zoom_dimension }}" alt="{{ product.title | escape }}" />
       </div>
     
     {% else %}
