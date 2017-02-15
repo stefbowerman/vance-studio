@@ -773,7 +773,8 @@ hr {
     transform: translateY(-50%);
     width: calc( ( (100% - #{$main-column-max-width}) / 2 ) - (2 * #{$body-padding-h}) );
     max-height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
   }
 }
 //
@@ -1643,6 +1644,7 @@ body.featherlight-open {
 
   // Only show the currency selector on relevant pages
   display: none;
+  .template-index &,
   .template-collection &,
   .template-product &,
   .template-cart & {
