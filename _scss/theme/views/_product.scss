@@ -42,7 +42,7 @@
   }
 }
 
-$product-blowup-dimension: 1000px;
+$product-blowup-dimension: 1200px;
 
 body.product-blowup-open {
   height: 100%;
@@ -128,12 +128,19 @@ body.product-blowup-open {
 
 /* END Product Photos */
 
-.product-details {
-  @extend .sidebar;
+/* START Product sidebar stuff */
 
+.product-details,
+.product-video {
+  @extend .sidebar;
   @include center-block;
   max-width: 400px;
-  
+  @media (min-width: $screen-lg-min){
+    max-width: none;
+  }
+}
+
+.product-details {
   @media (min-width: $screen-lg-min){
     max-width: none;
     .single-option-selector,
@@ -142,8 +149,19 @@ body.product-blowup-open {
       max-width: 250px;
     }
   }
-
 }
+
+.product-video {
+  @extend .sidebar--left;
+  @media (min-width: $screen-lg-min){
+    .product-video__wrapper {
+      max-width: 250px;
+      margin-left: auto;
+    }
+  }
+}
+
+/* END Product sidebar stuff */
 
 .size-guide-toggle {
   display: inline-block;
@@ -168,6 +186,38 @@ body.product-blowup-open {
     &:last-of-type {
       margin-bottom: 0;
     }
+  }
+}
+
+.product-video__toggle {
+  @media (min-width: $screen-lg-min){
+    display: none;
+  }
+}
+
+.product-video__ratio {
+  // width: 100%;
+  // height: 0;
+  // padding-bottom: 39.7%;
+  // max-width: 350px;
+  // margin-right: 0;
+  // margin-left: auto;
+  // position: relative;
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  display: none;
+  @media (min-width: $screen-lg-min){
+    display: block;
+  }
+  
+  iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
 }
 
@@ -208,4 +258,9 @@ body.product-blowup-open {
 
 .product-details__description {
   text-transform: none;
+  // Hide empty <p>'s to avoid weird spacing issues.
+  // We do some string manipulation in the product template that might leave empty elements here
+  p:empty {
+    display: none;
+  }
 }

@@ -37,12 +37,20 @@
   // You're on your own below this breakpoint
   @media (min-width: $screen-lg-min){
     position: fixed;
-    right: $body-padding-h;
     top: 50%;
     transform: translateY(-50%);
     width: calc( ( (100% - #{$main-column-max-width}) / 2 ) - (2 * #{$body-padding-h}) );
     max-height: 100vh;
     overflow-y: scroll;
     overflow-wrap: break-word;
+
+    &, 
+    &.sidebar--right {
+      right: $body-padding-h;
+    }
+    &.sidebar--left {
+      right: auto;
+      left: $body-padding-h;
+    }
   }
 }

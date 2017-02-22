@@ -87,6 +87,12 @@
       });
     });
 
+    /* Remove Banner video if we have a touch device and it's a small screen */
+    var $bannerVideo = $('.banner-video-wrapper');
+    if($bannerVideo.length && Vance.isMobile() && Vance.isTouch()){
+      $bannerVideo.remove();
+    }
+
   });
 
 })(jQuery, Modernizr, FastClick);

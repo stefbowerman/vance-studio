@@ -2,7 +2,39 @@
 {% assign sold_out    = 'Sold Out' %}
 {% assign unavailable = 'Unavailable' %}
 {% assign photo_main_dimension = '900x' %}
-{% assign photo_zoom_dimension = '1200x' %}
+{% assign photo_zoom_dimension = '1400x' %}
+
+{% comment %} Code for stripping last iframe embedded in product description {% endcomment %}
+{% assign product_has_video = false %}
+{% assign product_video_src = '' %}
+{% assign description = product.description %}
+{% assign iframe_open_tag = '<iframe' %}
+{% assign iframe_close_tag = '</iframe>' %}
+
+{% if description contains iframe_open_tag %}
+  {% assign description_parts = description | split: iframe_open_tag %}
+  {% assign description = '' %} {% comment %} Reset this because we're going to rebuild it without any iframes {% endcomment %}
+  {% assign parts_loop_max = description_parts | size | minus: 2 %} {% comment %} Minus 1 because array is zero index, minus 1 more because we don't want the last element {% endcomment %}
+  {% assign target_description_part = description_parts | last %}
+  {% for i in (0..parts_loop_max) %}
+    {% assign description = description | append: iframe_open_tag | append: description_parts[i] %}
+  {% endfor %}
+
+  {% assign target_part = description_parts | last %}
+  {% if target_part contains iframe_close_tag %}
+    {% comment %} Split on the tag and extract the "src" {% endcomment %}
+    {% assign parts = target_part | split: iframe_close_tag %}
+    {% assign product_video_src = parts[0] | split: 'src="' %}
+    {% assign product_video_src = product_video_src[1] | split: '"' | first %}
+    {% assign description_remainder = parts[1] %} {% comment %} The fact that we split on iframe first and then on </iframe> pretty much guarantees that we only have 2 parts{% endcomment %}
+    {% if product_video_src %}
+      {% assign product_has_video = true %}
+    {% endif %}
+    {% assign description = description | append: description_remainder %} {% comment %} Build description out of what is left {% endcomment %}
+  {% endif %}
+{% endif %}
+{% comment %} End iframe stripping {% endcomment %}
+
 
 <div class="main-column">
   <div class="product" itemscope itemtype="http://schema.org/Product">
@@ -87,12 +119,25 @@
       </form>
 
       <div id="product-description" class="product-details__description rte" itemprop="description">
-        {{ product.description }}
+        {{ description | strip }}
       </div>
       
       {% include 'size-guide' %}
       
     </div><!-- .product-details -->
+
+    {% if product_has_video %}
+      <div class="product-video">
+        <a href="#" class="product-video__toggle" data-featherlight="#product-video__embed">
+          <strong>Fit Video</strong>
+        </a>
+        <div id="product-video__wrapper" class="product-video__wrapper">
+          <div class="product-video__ratio">
+            <iframe id="product-video__embed" src="{{ product_video_src }}" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    {% endif %}
 
   </div>
 </div>
@@ -112,6 +157,7 @@
     product: {{ product | json }},
     moneyFormat: {{shop.money_format | json }},
     photoMainDimenion: {{ photo_main_dimension | json }},
+    hasVideo: {{ product_has_video | json}},
     msg: {
       addToCart: {{ add_to_cart | json }},
       soldOut: {{ sold_out | json }},

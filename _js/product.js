@@ -145,7 +145,7 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
       }
 
       // set the minZoom based on the smallest dimension of the screen to ensure the whole image fits
-      zoomMin = (winHeight >= winWidth ? winWidth : winHeight) / 1000;
+      zoomMin = (winHeight >= winWidth ? winWidth : winHeight) / 1200;
 
       iScroll = new IScroll($productBlowUp.get(0), {
         zoom: true,
@@ -155,8 +155,8 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
         zoomMin: zoomMin,
         zoomMax: Vance.isRetina() ? 0.85 : 1, // keep somewhat compressed if high quality screen
         startZoom: initialZoom,
-        startX: (winWidth / 2) - ((initialZoom * 1000) / 2), // 900 is the zoomed image dimension
-        startY: (winHeight / 2) - ((initialZoom * 1000) / 2) // 900 is the zoomed image dimension
+        startX: (winWidth / 2) - ((initialZoom * 1200) / 2),
+        startY: (winHeight / 2) - ((initialZoom * 1200) / 2)
       });
       
       $body.addClass('product-blowup-open');
