@@ -138,6 +138,10 @@ select.form-control {
     size: auto 8px; // w x h.  
   }
   padding-right: 16px + (10px * 2); // image width + double horizontal form-control padding
+  // Firefozx fixes
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: '';
 }
 
 // Reset height for `textarea`s
@@ -156,3 +160,11 @@ textarea.form-control {
 input[type="search"] {
   -webkit-appearance: none;
 }
+
+// Remove spinner in firefox
+@-moz-document url-prefix() {
+  input[type="number"] {
+      -moz-appearance: textfield;
+  }
+}
+

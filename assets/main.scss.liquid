@@ -68,11 +68,13 @@ $headings-color:          inherit !default;
 //
 // Note: These variables are not generated into the Customizer.
 
-$zindex-logo:            1000 !default;
-$zindex-nav:             1000 !default;
-$zindex-footer:          1000 !default;
-$zindex-blowup:          1050 !default;
-$zindex-featherlight:    2000 !default;
+$zindex-logo:             1000 !default;
+$zindex-nav:              1000 !default;
+$zindex-footer:           1000 !default;
+$zindex-blowup:           1050 !default;
+$zindex-modal-background: 1990 !default;
+$zindex-modal:            2000 !default;
+$zindex-featherlight:     2000 !default;
 
 //== Media queries breakpoints
 //
@@ -1142,6 +1144,10 @@ select.form-control {
     size: auto 8px; // w x h.  
   }
   padding-right: 16px + (10px * 2); // image width + double horizontal form-control padding
+  // Firefozx fixes
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: '';
 }
 
 // Reset height for `textarea`s
@@ -1160,6 +1166,14 @@ textarea.form-control {
 input[type="search"] {
   -webkit-appearance: none;
 }
+
+// Remove spinner in firefox
+@-moz-document url-prefix() {
+  input[type="number"] {
+      -moz-appearance: textfield;
+  }
+}
+
 
 // Borrowed heavily from bootstrap
 
@@ -1507,78 +1521,104 @@ nav {
     line-height: 1;
   }
 }
-.featherlight-dom { // dom that gets copied *into* the lightbox. Needs to be hidden
-  display: none;
-}
+//
+// Modals
+// --------------------------------------------------
 
-body.featherlight-open {
+// .modal-open      - body class for killing the scroll
+// .modal           - container to scroll within
+// .modal-dialog    - positioning shell for the actual modal
+// .modal-content   - actual modal w/ bg and corners and shit
+
+// Kill the scroll on the body
+.modal-open {
   overflow: hidden;
 }
 
-.featherlight {
+// Container that the modal scrolls within
+.modal {
   display: none;
-  position:fixed;
-  overflow: scroll;
-  top: 0; 
-  right: 0; 
-  bottom: 0; 
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  z-index: $zindex-featherlight;
+  z-index: $zindex-modal;
+  -webkit-overflow-scrolling: touch;
   text-align: center;
   white-space: nowrap;
-  cursor: pointer;
-  background: $body-bg;
-  background: transparent; /* IE8 "hack" for nested featherlights */
 
-  &:last-of-type {
-    background: transparentize($body-bg, 0.2); /* support for nested featherlights. Does not work in IE8 (use JS to fix) */
-  }
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
 
-  /* position: trick to center content vertically */
-  &:before {  
-    content: '';
+  &:before {
+    content: "";
     display: inline-block;
     height: 100%;
     vertical-align: middle;
+    margin-left: -3px; // ??
   }
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
-  .featherlight-content {
-    position: relative;
-    /* position: centering vertical and horizontal */
-    text-align: left;
-    vertical-align: middle;
-    display: inline-block;
+// Shell div to position the modal with bottom padding
+.modal-dialog {
+  position: relative;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+  overflow: auto;
 
-    /* dimensions: cut off images */
-    overflow: auto;
-    padding: 30px 25px;
-    border: 1px solid $text-color;
+  max-width: 90%;
+  max-width: calc(100% - 40px);
+  margin: 60px 15px;
 
-    /* dimensions: handling large content */
-    // max-height: 95%;
+  @media (min-width: 1024px){
     margin: 60px 20px;
-    max-width: 90%;
-    max-width: calc(100% - 40px);
+  }
+}
 
-    /* styling */
-    background: $body-bg;
-    cursor: auto;
+// Actual modal
+.modal-content {
+  position: relative;
+  background-color: $body-bg;
+  border: 1px solid $text-color; //old browsers fallback (ie8 etc)
+  background-clip: padding-box;
+  text-align: initial;
+  // Remove focus outline from opened modal
+  outline: 0;
 
-    /* reset white-space wrapping */
-    white-space: normal;
+  padding: 35px 15px 15px;
+  @media (min-width: 1024px){
+    padding: 35px 25px;
   }
 
-  .featherlight-inner {
-    /* make sure its visible */
-    display: block;
-  }
+}
 
-  .featherlight-close-icon {
+// Modal background
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-modal-background;
+  background-color: $body-bg;
+  &.in { opacity: 0.8; }
+}
+
+  .modal-content .close {
     /* position: centering vertical and horizontal */
     position: absolute;
     z-index: 9999;
-    top: 3px;
-    right: 3px;
+    top: 2px;
+    right: 2px;
 
     /* dimensions: 25px x 25px */
     line-height: 25px;
@@ -1589,8 +1629,7 @@ body.featherlight-open {
     text-align: center;
     border: none;
     padding: 0;
-    font-size: 1.8rem;
-    font-weight: bold;
+    font-size: 2.8rem;
     background: transparent;
 
     /* See http://stackoverflow.com/questions/16077341/how-to-reset-all-default-styles-of-the-html5-button-element */
@@ -1600,35 +1639,24 @@ body.featherlight-open {
     }
   }
 
-  .featherlight-image {
-    /* styling */
-    width: 100%;
-  }
+// Modal body
+// Where all modal content resides (sibling of .modal-header and .modal-footer)
+.modal-body {
+  position: relative;
 }
 
-
-.featherlight-iframe .featherlight-content {
-  /* removed the border for image croping since iframe is edge to edge */
-  // border-bottom: 0;
-  // padding: 0;
-  // -webkit-overflow-scrolling: touch;
-  // overflow-y: scroll;
+// Measure scrollbar width for padding body during modal show/hide
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
 }
 
-.featherlight iframe {
-  /* styling */
-  border: none;
-}
-
-/* handling phones and small screens */
-@media only screen and (max-width: 1024px) {
-  .featherlight .featherlight-content {
-    /* dimensions: maximize lightbox with for small screens */
-    margin-left: 15px;
-    margin-right: 15px;
-    // max-height: 98%;
-
-    padding: 30px 15px 15px;
+@media (min-width: $screen-md-min) {
+.modal-dialog {
+    min-width: 500px;
   }
 }
 
@@ -1641,14 +1669,6 @@ body.featherlight-open {
   font-weight: normal;
   background-size: auto 5px;
   background-position: right 7px top 50%;
-
-  // opacity: 0.5;
-
-  // &:hover,
-  // &:focus,
-  // &:active {
-  //   opacity: 1;
-  // }
 
   // Only show the currency selector on relevant pages
   display: none;
@@ -1690,10 +1710,12 @@ body.featherlight-open {
 
   &.is-zoomable {
     cursor: -webkit-zoom-in;
+    cursor: zoom-in;
   }
   &.is-zoomed {
     border-color: darken($body-bg, 8%);
     cursor: -webkit-zoom-out;
+    cursor: zoom-out;
   }
 }
 
@@ -1869,29 +1891,33 @@ body.product-blowup-open {
 }
 
 .product-video__ratio {
-  // width: 100%;
-  // height: 0;
-  // padding-bottom: 39.7%;
-  // max-width: 350px;
-  // margin-right: 0;
-  // margin-left: auto;
-  // position: relative;
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 164%;
   height: 0;
   overflow: hidden;
   display: none;
   @media (min-width: $screen-lg-min){
     display: block;
   }
+
+  // In case the video shows up in a modal
+  #modal-product-video & {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
   
   iframe {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    width: 240%;
+    height: 227%;
+    top: -60%;
+    left: -70%;
   }
+}
+
+#modal-product-video .modal-dialog {
+  min-width: 300px;
 }
 
 /* Quickly hiding default variant drop-down when JavaScript is enabled */
@@ -2076,7 +2102,7 @@ body.product-blowup-open {
   right: 0;
   bottom: 0;
   margin-top: -9%;
-  margin-bottom: -5%;
+  margin-bottom: -7%;
 
   iframe {
     position: absolute; 

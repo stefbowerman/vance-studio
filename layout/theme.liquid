@@ -63,6 +63,7 @@
     {{ 'app.js'  | asset_url | script_tag }}
 
     {% if template contains 'product' %}
+      <script src="https://player.vimeo.com/api/player.js"></script>
       {{ 'product.js' | asset_url | script_tag }}
     {% endif %}
 

@@ -4,7 +4,7 @@
 @import url("components/_product-list.scss");
 @import url("components/_swatch.scss");
 @import url("components/_pagination.scss");
-@import url("components/_featherlight.scss");
+@import url("components/_modals.scss");
 
 // Mini currency selector
 #currency-select {
@@ -15,14 +15,6 @@
   font-weight: normal;
   background-size: auto 5px;
   background-position: right 7px top 50%;
-
-  // opacity: 0.5;
-
-  // &:hover,
-  // &:focus,
-  // &:active {
-  //   opacity: 1;
-  // }
 
   // Only show the currency selector on relevant pages
   display: none;

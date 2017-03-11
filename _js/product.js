@@ -14,7 +14,7 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
 /* jshint ignore:end */
 
 // Start Product Page
-;(function($, Vance, Modernizr, Shopify, ProductPageConfig, undefined){
+;(function($, Vance, Modernizr, Shopify, ProductPageConfig, Vimeo, undefined){
 
   var EVENT_KEY = '.productPage';
   var event = {
@@ -273,6 +273,136 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
     return this.init();
   }
 
+  /**
+   * Used to control the video on the product page
+   *
+   * @constructor
+   * @param {Object} options - Configuration
+   * @return {self}
+   */
+  function ProductVideoController(){
+    
+    var _this = this;
+    var VIDEO_TYPES = {
+      vimeo   : 'vimeo',
+      other   : 'other'
+    };
+    var $el             = $('#product-video');
+    var src             = $el.data('src');
+    var $wrapper        = $el.find('#product-video__wrapper');
+    var $ratio          = $el.find('#product-video__ratio');
+    var $videoModal     = $('#modal-product-video');
+    var $videoModalBody = $videoModal.find('.modal-body');
+
+
+    this._getVideoType = function(){
+      if(src.match(/vimeo/)){
+        return VIDEO_TYPES.vimeo;
+      }
+      else {
+        return VIDEO_TYPES.other;
+      }
+    };
+
+    this._aboveModalBreakpoint = function(){
+      return $(window).width() >= 1100;
+    };
+
+    this.initForVideoType = function(type, src){
+
+      if(!VIDEO_TYPES.hasOwnProperty(type) || !src ){
+        return;
+      }
+
+      var player;
+      var $iframe = $('<iframe>');
+
+      $iframe.attr({
+        id: 'product-video__embed',
+        src: src,
+        frameborder: '0',
+        allowfullscreen: ''
+      });
+
+      function fadeInPlay(){
+        $wrapper.css('opacity', 0);
+        player.play().then(setTimeout(function(){
+          $wrapper.fadeTo(500, 1);
+        }, 800));
+      }
+
+
+      if(type === VIDEO_TYPES.vimeo){
+        $ratio.html($iframe);
+        
+        player = new Vimeo.Player($iframe.get(0), {
+          autoplay : false,
+          loop     : true,
+          portrait : false,
+          byline   : false
+        });
+
+        player.setLoop(true);
+        $wrapper.css('opacity', 0);
+
+
+        // Attach events!
+
+        $videoModal.on('shown.bs.modal', function(){
+          $ratio.clone().appendTo($videoModalBody);
+          player.pause();
+        });
+
+        $videoModal.on('hidden.bs.modal', function(){
+          $videoModalBody.find('.product-video__ratio').remove();
+
+          if(_this._aboveModalBreakpoint()){
+            fadeInPlay();
+          }
+        });
+
+        // Where the magic happens
+        player.on('loaded', function(){
+          if(_this._aboveModalBreakpoint()){
+            fadeInPlay();
+          }
+        });
+
+        $(window).on('resize', $.throttle(100, function(){
+          if(_this._aboveModalBreakpoint()){
+            player.getPaused().then(function(paused){
+              if(paused){
+                player.setCurrentTime(0).then(fadeInPlay);
+              }
+            });
+          }
+        }));
+
+      }
+      else {
+        //
+      }
+
+    };
+
+    this.init = function(){
+      if(!($el.length && src && src.length)){
+        return false;
+      }
+
+      if(this._getVideoType() !== VIDEO_TYPES.vimeo){
+        console.warn('Only Vimeo is supported for product videos');
+        return false;
+      }
+
+      this.initForVideoType( this._getVideoType(), src );
+
+      return this;
+    };
+
+    return this.init();
+  }
+
   var onVariantSelected = function(variant, selector) {
     var $add = $('#add');
     var $price = $('#product-price');
@@ -351,6 +481,10 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
       onThumbClick: productImageZoomController.changeImage.bind(productImageZoomController)
     });
 
+    if(ProductPageConfig.hasVideo){
+      var productVideoController = new ProductVideoController();  
+    }
+
     /* Size Guide toggle stuff */
     $('.size-guide').find('table').addClass('table');
     $('.size-guide-toggle').on('click', function(){
@@ -359,4 +493,4 @@ this.options.defaultScrollbars&&this.options.customStyle&&(this.options.listenX?
 
   });
 
-})(jQuery, Vance, Modernizr, Shopify, ProductPageConfig);
+})(jQuery, Vance, Modernizr, Shopify, ProductPageConfig, Vimeo);

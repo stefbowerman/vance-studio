@@ -1,0 +1,138 @@
+//
+// Modals
+// --------------------------------------------------
+
+// .modal-open      - body class for killing the scroll
+// .modal           - container to scroll within
+// .modal-dialog    - positioning shell for the actual modal
+// .modal-content   - actual modal w/ bg and corners and shit
+
+// Kill the scroll on the body
+.modal-open {
+  overflow: hidden;
+}
+
+// Container that the modal scrolls within
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-modal;
+  -webkit-overflow-scrolling: touch;
+  text-align: center;
+  white-space: nowrap;
+
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-left: -3px; // ??
+  }
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// Shell div to position the modal with bottom padding
+.modal-dialog {
+  position: relative;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+  overflow: auto;
+
+  max-width: 90%;
+  max-width: calc(100% - 40px);
+  margin: 60px 15px;
+
+  @media (min-width: 1024px){
+    margin: 60px 20px;
+  }
+}
+
+// Actual modal
+.modal-content {
+  position: relative;
+  background-color: $body-bg;
+  border: 1px solid $text-color; //old browsers fallback (ie8 etc)
+  background-clip: padding-box;
+  text-align: initial;
+  // Remove focus outline from opened modal
+  outline: 0;
+
+  padding: 35px 15px 15px;
+  @media (min-width: 1024px){
+    padding: 35px 25px;
+  }
+
+}
+
+// Modal background
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-modal-background;
+  background-color: $body-bg;
+  &.in { opacity: 0.8; }
+}
+
+  .modal-content .close {
+    /* position: centering vertical and horizontal */
+    position: absolute;
+    z-index: 9999;
+    top: 2px;
+    right: 2px;
+
+    /* dimensions: 25px x 25px */
+    line-height: 25px;
+    width: 25px;
+
+    /* styling */
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    padding: 0;
+    font-size: 2.8rem;
+    background: transparent;
+
+    /* See http://stackoverflow.com/questions/16077341/how-to-reset-all-default-styles-of-the-html5-button-element */
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+// Modal body
+// Where all modal content resides (sibling of .modal-header and .modal-footer)
+.modal-body {
+  position: relative;
+}
+
+// Measure scrollbar width for padding body during modal show/hide
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+@media (min-width: $screen-md-min) {
+.modal-dialog {
+    min-width: 500px;
+  }
+}

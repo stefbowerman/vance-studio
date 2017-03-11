@@ -4,6 +4,29 @@
 {% assign photo_main_dimension = '900x' %}
 {% assign photo_zoom_dimension = '1400x' %}
 
+{% comment %} Code for showing the size guide {% endcomment %}
+{% assign size_options = 'size' | split: ',' %}
+{% assign has_size = false %}
+{% for option in product.options %}  
+  {% assign downcased_option = option | downcase %}
+  {% if has_size == false and size_options contains downcased_option %}
+    {% assign has_size = true %}
+  {% endif %}
+{% endfor %}
+
+{% assign has_size_guide = false %}
+{% if pages[settings.size_guide_page] != empty %}
+{% assign has_size_guide = true %}
+{% endif %}
+
+{% assign show_size_guide = false %}
+{% if has_size_guide and has_size %}
+  {% assign show_size_guide = true %}
+{% endif %}
+{% comment %} End size guide {% endcomment %}
+
+
+
 {% comment %} Code for stripping last iframe embedded in product description {% endcomment %}
 {% assign product_has_video = false %}
 {% assign product_video_src = '' %}
@@ -122,18 +145,23 @@
         {{ description | strip }}
       </div>
       
-      {% include 'size-guide' %}
+      {% if show_size_guide %}
+        <a href="#" class="size-guide-toggle" data-toggle="modal" data-target="#modal-size-guide">
+          <strong>Size Guide</strong>
+        </a>
+      {% endif %}
       
     </div><!-- .product-details -->
 
     {% if product_has_video %}
-      <div class="product-video">
-        <a href="#" class="product-video__toggle" data-featherlight="#product-video__embed">
+      <div id="product-video" class="product-video" data-src="{{ product_video_src }}">
+        <a href="#" class="product-video__toggle" data-toggle="modal" data-target="#modal-product-video">
           <strong>Fit Video</strong>
         </a>
         <div id="product-video__wrapper" class="product-video__wrapper">
-          <div class="product-video__ratio">
-            <iframe id="product-video__embed" src="{{ product_video_src }}" frameborder="0" allowfullscreen></iframe>
+          <div id="product-video__ratio" class="product-video__ratio">
+            {% comment %} Fill this in via JS {% endcomment %}
+            <!-- <iframe id="product-video__embed" src="{{ product_video_src }}" frameborder="0" allowfullscreen></iframe> -->
           </div>
         </div>
       </div>
@@ -148,6 +176,34 @@
   </div>
   <a href="#" class="product-blowup__close" title="Close">&times;</a>
 </div>
+
+{% if show_size_guide %}
+<div id="modal-size-guide" class="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="size-guide">
+          {{ pages[settings.size_guide_page].content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if product_has_video %}
+<div id="modal-product-video" class="modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        {% comment %} Put the video in the frame via JS when the modal is opened {% endcomment %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {{ 'option_selection.js' | shopify_asset_url | script_tag }}
 
