@@ -48,9 +48,9 @@ $font-size-h5:            $font-size-base !default;
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default;
 
 //** Unit-less `line-height` for use in components like buttons.
-$line-height-base:        1.42857 !default; // 20/14
+$line-height-base:        1.52 !default; // 1.42857
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-$line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
+$line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 
 $letter-spacing:          0.1rem;
 $letter-spacing-large:    $letter-spacing * 2.2;
@@ -872,6 +872,10 @@ ol {
     margin-bottom: 0;
   }
 }
+
+.rte {
+  text-transform: none;
+}
 //
 // Tables
 // --------------------------------------------------
@@ -1292,18 +1296,18 @@ nav {
     margin-bottom: 5px;
 
     &.active {
-
-      &:before {
-        content: '\00d7';
-        position: absolute;
-        top: 2px;
-        left: -15px;
-        height: 7px;
-        width: 7px;
-        font-size: $font-size-small;
-        line-height: 1;
+      @media (min-width: $screen-sm-min){
+        &:before {
+          content: '\00d7';
+          position: absolute;
+          top: 2px;
+          left: -15px;
+          height: 7px;
+          width: 7px;
+          font-size: $font-size-small;
+          line-height: 1;
+        }
       }
-
       &, a {
         color: $red;
       }
@@ -1388,7 +1392,7 @@ nav {
 }
 .product-list {
   text-align: center;
-  @media (min-width: $screen-xs-min){
+  @media (min-width: $screen-sm-min){
     text-align: left;
   }
 }
@@ -1411,6 +1415,10 @@ nav {
 .product-list__product-info-link {
   @media (min-width: $screen-sm-min){
     float: left;
+
+    .product-list__product--has-swatches & {
+      width: 75%;
+    }
   }
 }
 
@@ -1428,7 +1436,9 @@ nav {
 
   @media (min-width: $screen-sm-min){
     float: right;
-    margin: 0;
+    width: 25%;
+    margin-top: 1px;
+    text-align: right;
   }
   
 }
@@ -1672,8 +1682,6 @@ nav {
 
   // Only show the currency selector on relevant pages
   display: none;
-  .template-index &,
-  .template-collection &,
   .template-product &,
   .template-cart & {
     display: block;
@@ -1936,6 +1944,11 @@ body.product-blowup-open {
   }
 }
 
+// .product-soldoutmsg {
+//   text-transform: none;
+//   margin-bottom: 20px;
+// }
+
 .product-details__title {
   margin: 0 0 5px;
   font-size: $font-size-base;
@@ -1957,6 +1970,9 @@ body.product-blowup-open {
 
 .product-details__description {
   text-transform: none;
+  @media (min-width: $screen-lg-min){
+    font-size: $font-size-base - 1;
+  }
   // Hide empty <p>'s to avoid weird spacing issues.
   // We do some string manipulation in the product template that might leave empty elements here
   p:empty {
@@ -2065,10 +2081,14 @@ body.product-blowup-open {
   }
 }
 .page-title {
-  display: none;
   text-align: center;
   font-size: $font-size-base;
-  font-weight: normal;
+  font-weight: bold;
+  margin-bottom: $line-height-computed;
+
+  #contact.template-page & {
+    display: none;
+  }
 }
 
 // Contact Page

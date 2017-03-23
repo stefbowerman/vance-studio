@@ -4,34 +4,40 @@
   - Never paginate by more than 50.
 {% endcomment %}
 
-<div class="banner-video-wrapper">
-  <div class="banner-video-positioner">
-    <iframe src="https://player.vimeo.com/video/207395334?autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></div>
-</div>
+{% assign collection = collections.all %}
+{% unless settings.homepage_collection == blank or collections[settings.homepage_collection].empty? %}
+{% assign collection = collections[settings.homepage_collection] %}
+{% endunless %}
 
-<div class="main-column">
+{% paginate collection.products by 10 %}
 
-  {% assign collection = collections.all %}
-  {% unless settings.homepage_collection == blank or collections[settings.homepage_collection].empty? %}
-  {% assign collection = collections[settings.homepage_collection] %}
-  {% endunless %}
 
-  {% paginate collection.products by 10 %}
+  {% if paginate.current_page == 1 %}
 
-    <ul class="product-list">
-    {% for product in collection.products %}
-      {% include 'product-list-product' %}
-    {% else %}
-      <p class="text-center">Nothing here - check back later</p>
-    {% endfor %}
-    </ul>
-
-    {% if paginate.pages > 1 %}
-    <div class="pagination">
-      {{ paginate | default_pagination: next: '»', previous: '«' }}
+    <div class="banner-video-wrapper">
+      <div class="banner-video-positioner">
+        <iframe src="https://player.vimeo.com/video/207395334?autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;loop=1" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+      </div>
     </div>
-    {% endif %}
 
-  {% endpaginate %}
+  {% endif %}
 
-</div>
+  <div class="main-column">
+
+      <ul class="product-list">
+      {% for product in collection.products %}
+        {% include 'product-list-product' %}
+      {% else %}
+        <p class="text-center">Nothing here - check back later</p>
+      {% endfor %}
+      </ul>
+
+      {% if paginate.pages > 1 %}
+      <div class="pagination">
+        {{ paginate | default_pagination: next: '»', previous: '«' }}
+      </div>
+      {% endif %}
+
+  </div>
+
+{% endpaginate %}

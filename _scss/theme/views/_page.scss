@@ -1,8 +1,12 @@
 .page-title {
-  display: none;
   text-align: center;
   font-size: $font-size-base;
-  font-weight: normal;
+  font-weight: bold;
+  margin-bottom: $line-height-computed;
+
+  #contact.template-page & {
+    display: none;
+  }
 }
 
 // Contact Page

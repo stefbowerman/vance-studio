@@ -1,6 +1,6 @@
 .product-list {
   text-align: center;
-  @media (min-width: $screen-xs-min){
+  @media (min-width: $screen-sm-min){
     text-align: left;
   }
 }
@@ -23,6 +23,10 @@
 .product-list__product-info-link {
   @media (min-width: $screen-sm-min){
     float: left;
+
+    .product-list__product--has-swatches & {
+      width: 75%;
+    }
   }
 }
 
@@ -40,7 +44,9 @@
 
   @media (min-width: $screen-sm-min){
     float: right;
-    margin: 0;
+    width: 25%;
+    margin-top: 1px;
+    text-align: right;
   }
   
 }

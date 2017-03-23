@@ -4,6 +4,15 @@
 {% assign photo_main_dimension = '900x' %}
 {% assign photo_zoom_dimension = '1400x' %}
 
+{% comment %} Special order variables {% endcomment %}
+{% assign special_order_email = 'studio@vancestudio.com' %}
+{% assign special_order_subject = 'Special Order Request: ' | append: product.title %}
+{% capture special_order_mailto %}
+  mailto:{{ special_order_email }}?subject={{ special_order_subject }}
+{% endcapture %}
+{% assign special_order_mailto = special_order_mailto | strip | url_escape %}
+{% comment %} End special order variables {% endcomment %}
+
 {% comment %} Code for showing the size guide {% endcomment %}
 {% assign size_options = 'size' | split: ',' %}
 {% assign has_size = false %}
@@ -25,8 +34,6 @@
 {% endif %}
 {% comment %} End size guide {% endcomment %}
 
-
-
 {% comment %} Code for stripping last iframe embedded in product description {% endcomment %}
 {% assign product_has_video = false %}
 {% assign product_video_src = '' %}
@@ -40,7 +47,7 @@
   {% assign parts_loop_max = description_parts | size | minus: 2 %} {% comment %} Minus 1 because array is zero index, minus 1 more because we don't want the last element {% endcomment %}
   {% assign target_description_part = description_parts | last %}
   {% for i in (0..parts_loop_max) %}
-    {% assign description = description | append: iframe_open_tag | append: description_parts[i] %}
+    {% assign description = description | append: description_parts[i] | append: iframe_open_tag %}
   {% endfor %}
 
   {% assign target_part = description_parts | last %}
@@ -57,7 +64,6 @@
   {% endif %}
 {% endif %}
 {% comment %} End iframe stripping {% endcomment %}
-
 
 <div class="main-column">
   <div class="product" itemscope itemtype="http://schema.org/Product">
@@ -142,6 +148,11 @@
       </form>
 
       <div id="product-description" class="product-details__description rte" itemprop="description">
+        {% unless product.available %}
+          <p class="product-soldoutmsg">
+            *Although this item is currently out of stock, it is available for special order.  To place a special order please email us at <a href="{{ special_order_mailto }}" target="_blank" style="text-decoration: underline">{{ special_order_email }}</a>
+          </p>
+        {% endunless %}
         {{ description | strip }}
       </div>
       

@@ -243,6 +243,11 @@ body.product-blowup-open {
   }
 }
 
+// .product-soldoutmsg {
+//   text-transform: none;
+//   margin-bottom: 20px;
+// }
+
 .product-details__title {
   margin: 0 0 5px;
   font-size: $font-size-base;
@@ -264,6 +269,9 @@ body.product-blowup-open {
 
 .product-details__description {
   text-transform: none;
+  @media (min-width: $screen-lg-min){
+    font-size: $font-size-base - 1;
+  }
   // Hide empty <p>'s to avoid weird spacing issues.
   // We do some string manipulation in the product template that might leave empty elements here
   p:empty {

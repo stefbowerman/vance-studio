@@ -39,18 +39,18 @@ nav {
     margin-bottom: 5px;
 
     &.active {
-
-      &:before {
-        content: '\00d7';
-        position: absolute;
-        top: 2px;
-        left: -15px;
-        height: 7px;
-        width: 7px;
-        font-size: $font-size-small;
-        line-height: 1;
+      @media (min-width: $screen-sm-min){
+        &:before {
+          content: '\00d7';
+          position: absolute;
+          top: 2px;
+          left: -15px;
+          height: 7px;
+          width: 7px;
+          font-size: $font-size-small;
+          line-height: 1;
+        }
       }
-
       &, a {
         color: $red;
       }

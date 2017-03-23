@@ -3,7 +3,12 @@
   {% assign on_sale = true %}
 {% endif %}
 
-  <li class="product-list__product">
+{% capture swatch_html %}
+  {% include 'product-list-product-swatches' %}
+{% endcapture %}
+{% assign swatch_html = swatch_html | strip %}
+
+  <li class="product-list__product {% if swatch_html != blank %}product-list__product--has-swatches{% endif %}">
     <a href="{{ product.url }}" title="{{ product.title | escape }}">
       {% comment %}
         Let's cheat a little bit here and force hi-res images for desktop screens by defining the container
@@ -25,18 +30,21 @@
     </a>
     <div class="product-list__product-info">
       <a href="{{ product.url }}" title="{{ product.title | escape }}" class="product-list__product-info-link">
-        <span class="product-list__product-title">{{ product.title }} - </span>
+        <span class="product-list__product-title">{{ product.title }}</span>
+        {% comment %}
         <span class="product-list__product-price">
+          - 
           {% if product.price_varies %}From{% endif %}
             <span data-convert-money>{{ product.price | money }}</span>
           {% if on_sale %}
             <span class="compare-at-price" data-convert-money style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span>
           {% endif %}
         </span>
+        {% endcomment %}
       </a>
-      {% if product.available and product.variants.size > 1 %}
+      {% if swatch_html != blank %}
         <div class="product-list__product-swatches">
-          {% include 'product-list-product-swatches' %}
+          {{ swatch_html }}
         </div>
       {% endif %}
     </div>

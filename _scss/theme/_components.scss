@@ -18,8 +18,6 @@
 
   // Only show the currency selector on relevant pages
   display: none;
-  .template-index &,
-  .template-collection &,
   .template-product &,
   .template-cart & {
     display: block;
