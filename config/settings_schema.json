@@ -61,7 +61,7 @@
     ]
   },
   {
-    "name": "Social media",
+    "name": "Social Media",
     "settings": [
       {
         "type": "header",
@@ -71,13 +71,39 @@
         "type": "text",
         "id": "social_instagram_link",
         "label": "Instagram",
-        "info": "https:\/\/instagram.com\/shopify"
+        "info": "Username (no @)"
       },
       {
         "type": "text",
         "id": "social_facebook_link",
         "label": "Facebook",
         "info": "https:\/\/www.facebook.com\/shopify"
+      }
+    ]
+  },
+  {
+    "name": "About Page",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "about_page_image",
+        "label": "About Page Image",
+        "info": "Default image will show if none is provided"
+      }
+    ]
+  },
+  {
+    "name": "Newsletter",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Account"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_form_action",
+        "label": "MailChimp form action URL",
+        "info": "[Where do I find my MailChimp form action URL?](http:\/\/docs.shopify.com\/support\/configuration\/store-customization\/where-do-i-get-my-mailchimp-form-action)"
       }
     ]
   }

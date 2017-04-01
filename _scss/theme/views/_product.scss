@@ -153,6 +153,10 @@ body.product-blowup-open {
   }
 }
 
+.product-details__essential {
+  margin-bottom: 30px;
+}
+
 .product-video {
   @extend .sidebar--left;
   @media (min-width: $screen-lg-min){
@@ -234,7 +238,7 @@ body.product-blowup-open {
 /* Product option wrapper. */
 .selector-wrapper {
   + .selector-wrapper {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
   label {
@@ -254,8 +258,6 @@ body.product-blowup-open {
 }
 
 .product-details__price {
-  margin-bottom: 30px;
-  
   .product-compare-price {
     padding-left: 5px;
     text-decoration: line-through;
@@ -264,7 +266,11 @@ body.product-blowup-open {
 
 .button--addtocart {
   @extend .button--block;
-  margin: 30px 0;
+  margin: 25px 0;
+
+  &[disabled] {
+    color: $red;
+  }
 }
 
 .product-details__description {

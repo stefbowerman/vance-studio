@@ -34,6 +34,155 @@
     return window.hasOwnProperty('devicePixelRatio') && window.devicePixelRatio >= 1.5;
   };
 
+  Vance.emailSignup = {
+    $form          : $('form.mc-ajax-form'),
+    $modal         : $('#modal-newsletter-subscribe'),
+    $modalSuccess  : $('.modal-newsletter-success'),
+    $modalError    : $('.modal-newsletter-error'),
+    $modalErrorMsg : $('.modal-newsletter-error__message'),
+    regexes: {
+      error: {
+        1: /Please enter a value/,
+        2: /An email address must contain a single @/,
+        3: /The domain portion of the email address is invalid \(the portion after the @: (.+)\)/,
+        4: /The username portion of the email address is invalid \(the portion before the @: (.+)\)/,
+        5: /This email address looks fake or invalid. Please enter a real email address/,
+        6: /.+\#6592.+/,
+        7: /(.+@.+) is already subscribed to list (.+)\..+<a href.+/
+      }
+    },
+    responses: {
+      success: 'Thank you for subscribing!',
+      error: {
+        1: 'Please enter an email address',
+        2: 'There was a problem with your entry. Please check the address and try again.',
+        3: 'There was a problem with your entry. Please check the address and try again.',
+        4: 'There was a problem with your entry. Please check the address and try again.',
+        5: 'There was a problem with your entry. Please check the address and try again.',
+        6: 'Too many subscribe attempts for this email address. Please try again in about 5 minutes.',
+        7: 'You\'re already subscribed. Thank you!'
+      }
+    },
+    getRegexMatch : function(string, stringKey){
+      var regexPatterns = this.regexes[stringKey];
+      var matchedId;
+      $.each(regexPatterns, function(id, regexPattern) {
+        if (string.match(regexPattern) !== null){
+          matchedId = id;
+          return false;
+        }
+      });
+      return matchedId;
+    },
+    getMessageForResponse : function(response){
+      var msg;
+      if(response.result === 'success') {
+        msg = this.responses.success;
+      } 
+      else {
+        var index = -1;
+        try {
+          var parts = response.msg.split(' - ', 2);
+          if (parts[1] === undefined) {
+            msg = response.msg;
+          } else {
+            msg = parts[1];
+          }
+        }
+        catch (e) {
+          msg = response.msg;
+        }
+
+        // Now that we have the relevant part of the message, lets get the actual string for it
+        var regexPattern = this.regexes.error;
+        var matchedId = this.getRegexMatch(msg, 'error');
+        if(matchedId && regexPattern[matchedId] && this.responses.error[matchedId]){
+          return msg.replace(regexPattern[matchedId], this.responses.error[matchedId]);
+        }
+      }
+
+      return msg;
+    },
+    onBeforeSend : function(){
+      var $input = this.$form.find('input[type="email"]');
+      var $submit = this.$form.find('[type="submit"]');
+
+      if($input.val() && $input.val().length){
+        $submit.prop('disabled', true);
+        return true;
+      }
+      else {
+        $input.parents('.form-group').addClass('has-error');
+      }
+      return false;
+      
+    },
+    onSubmitDone : function(response){
+      var success = response.result === 'success';
+      var rspMsg  = this.getMessageForResponse(response);
+      var $input  = this.$form.find('input[type="email"]');
+      var $submit = this.$form.find('[type="submit"]');
+
+      $submit.prop('disabled', false);
+
+      if(success){
+        $input.val('');
+        this.$modalSuccess.show();
+        this.$modalError.hide();
+      } else {
+        this.$modalErrorMsg.empty().html(rspMsg);
+        this.$modalSuccess.hide();
+        this.$modalError.show();
+      }
+
+      this.$modal.modal('show');
+    },
+    onSubmitFail : function($form){
+      console.log('ajax form submit failed');
+    },
+    handleOnSubmit: function(e){
+      e.preventDefault();
+      var _this = this;
+      var $form = this.$form;
+      var data = {};
+      var dataArray = $form.serializeArray();
+      
+      // See - https://github.com/scdoshi/jquery-ajaxchimp/blob/master/jquery.ajaxchimp.js
+      $.each(dataArray, function(index, item) {
+        data[item.name] = item.value;
+      });
+      
+      $.ajax({
+        url: $form.attr('action').replace('/post?', '/post-json?').concat('&c=?'),
+        dataType: 'jsonp',
+        data: data,
+        beforeSend: _this.onBeforeSend.bind(_this)
+      })
+      .done( function(response){
+        _this.onSubmitDone(response);
+      })
+      .fail( function(){
+        _this.onSubmitFail();
+      });
+
+      return false;
+    },
+    init: function(){
+      var _this = this;
+
+      if(this.$form.length === 0){
+        return false;
+      }
+
+      this.$form.on('submit', _this.handleOnSubmit.bind(_this));
+      this.$form.find('input[type="email"]').on('focus', function(){
+        $(this).parents('.form-group').removeClass('has-error');
+      });
+
+      return this;
+    }
+  };
+
   $(function(){
 
     /* Remove SVG images to avoid broken images in all browsers that don't support SVG. */
@@ -45,6 +194,8 @@
     if(Vance.isMobile) {
       FastClick.attach(document.body);
     }
+
+    console.log(Vance.emailSignup.init());
     
     /* Prepare to have floated images fill the width of the design on blog pages on small devices. */
     /*==========================*/ 
@@ -79,6 +230,8 @@
     if($bannerVideo.length && Vance.isMobile() && Vance.isTouch()){
       $bannerVideo.remove();
     }
+
+
 
   });
 

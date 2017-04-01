@@ -6,3 +6,4 @@ development:
   theme_id: 164844428
   ignore_files:
     - config.yml
+    - config/settings_data.json

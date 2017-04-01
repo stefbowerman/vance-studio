@@ -15,12 +15,4 @@ Example: the h2 element should have the same size and color in:
   <div class="rte">
     {{ page.content }}
   </div>
-  {% if page.handle == "contact" %}
-    <div class="sidebar">
-      <p><a href="mailto:studio@vancestudio.com" target="_blank">studio@vancestudio.com</a></p>
-      {% unless settings.social_instagram_link == blank %}
-        <p><a href="http://instagram.com/{{ settings.social_instagram_link }}" target="_blank">@{{ settings.social_instagram_link }}</a></p>
-      {% endunless %}
-    </div>
-  {% endif %}
 </div>

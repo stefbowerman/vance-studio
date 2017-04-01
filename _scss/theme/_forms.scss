@@ -149,6 +149,27 @@ textarea.form-control {
   height: auto;
 }
 
+input[type="text"]
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+textarea {
+  &.form-control {
+    font-weight: normal;
+    text-transform: none;
+  }
+}
+
+.form-group {
+  margin-bottom: ($line-height-computed / 2);
+}
+
+.has-error {
+  .form-control,{
+    border-color: $red;
+  }
+}
 
 // Search inputs in iOS
 //

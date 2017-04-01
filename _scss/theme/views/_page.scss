@@ -1,19 +1,8 @@
+@import url("page/_about.scss");
+
 .page-title {
   text-align: center;
   font-size: $font-size-base;
   font-weight: bold;
   margin-bottom: $line-height-computed;
-
-  #contact.template-page & {
-    display: none;
-  }
-}
-
-// Contact Page
-#contact {
-  .sidebar {
-    @media (max-width: $screen-md-max){
-      text-align: center
-    }
-  }
 }

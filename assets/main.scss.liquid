@@ -1159,6 +1159,27 @@ textarea.form-control {
   height: auto;
 }
 
+input[type="text"]
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+textarea {
+  &.form-control {
+    font-weight: normal;
+    text-transform: none;
+  }
+}
+
+.form-group {
+  margin-bottom: ($line-height-computed / 2);
+}
+
+.has-error {
+  .form-control,{
+    border-color: $red;
+  }
+}
 
 // Search inputs in iOS
 //
@@ -1854,6 +1875,10 @@ body.product-blowup-open {
   }
 }
 
+.product-details__essential {
+  margin-bottom: 30px;
+}
+
 .product-video {
   @extend .sidebar--left;
   @media (min-width: $screen-lg-min){
@@ -1935,7 +1960,7 @@ body.product-blowup-open {
 /* Product option wrapper. */
 .selector-wrapper {
   + .selector-wrapper {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
   label {
@@ -1955,8 +1980,6 @@ body.product-blowup-open {
 }
 
 .product-details__price {
-  margin-bottom: 30px;
-  
   .product-compare-price {
     padding-left: 5px;
     text-decoration: line-through;
@@ -1965,7 +1988,11 @@ body.product-blowup-open {
 
 .button--addtocart {
   @extend .button--block;
-  margin: 30px 0;
+  margin: 25px 0;
+
+  &[disabled] {
+    color: $red;
+  }
 }
 
 .product-details__description {
@@ -2080,24 +2107,27 @@ body.product-blowup-open {
     text-align: center;
   }
 }
+.sidebar-about-content {
+  margin-top: 30px;
+  &,
+  .form-control {
+    text-align: center;
+  }
+  @media (min-width: $screen-lg-min){
+    margin-top: 0;
+    max-width: 350px;
+    &,
+    .form-control {
+      text-align: left;
+    }
+  }
+}
+
 .page-title {
   text-align: center;
   font-size: $font-size-base;
   font-weight: bold;
   margin-bottom: $line-height-computed;
-
-  #contact.template-page & {
-    display: none;
-  }
-}
-
-// Contact Page
-#contact {
-  .sidebar {
-    @media (max-width: $screen-md-max){
-      text-align: center
-    }
-  }
 }
 .banner-video-wrapper {
   width: 100%;
