@@ -24,12 +24,14 @@
       {% unless settings.newsletter_form_action == blank %}
         <form class="mc-ajax-form" action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate target="_blank">
           <div class="form-group">
-            <label for="newsletter-subscribe-input" class="small">Subscribe For Updates</label>
-            <input id="newsletter-subscribe-input" type="email" name="EMAIL" class="form-control" placeholder="example@mail.com" value="{% if customer %}{{ customer.email }}{% endif %}" required="required"/>
-            {% comment %} real people should not fill this in and expect good things - do not remove this or risk form bot signups {% endcomment %}
+            <label for="newsletter-subscribe-input" class="small sr-only">Subscribe For Updates</label>
+            <div class="newsletter-subscribe-input-wrapper">
+              <input id="newsletter-subscribe-input" type="email" name="EMAIL" class="form-control" placeholder="Join Our Mailing List" value="{% if customer %}{{ customer.email }}{% endif %}" required="required"/>
+              {% comment %} real people should not fill this in and expect good things - do not remove this or risk form bot signups {% endcomment %}
+              <button type="submit">&gt;</button>
+            </div>
             <div style="position: absolute; left: -5000px;"><input type="text" name="b_860d69c1b641125be92c01f64_1a8ecda325" tabindex="-1" value=""></div>
           </div>
-          <button type="submit" class="button button--block">Subscribe</button>
         </form>
       {% endunless %}
     </div>

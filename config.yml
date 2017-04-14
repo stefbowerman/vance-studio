@@ -1,9 +1,0 @@
---- 
-development:
-  #api_key: d6992e92ab7f242c3653299fa4145429
-  password: 776a87d234bd239e9070ade9b9cd4d92
-  store: vancestudio.myshopify.com
-  theme_id: 164844428
-  ignore_files:
-    - config.yml
-    - config/settings_data.json

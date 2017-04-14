@@ -1244,6 +1244,37 @@ input[type="search"] {
   }
 }
 
+// Link buttons
+// -------------------------
+
+// Make a button look and behave like a link
+.btn-link {
+  color: $link-color;
+  font-weight: normal;
+  border-radius: 0;
+  text-transform: none;
+
+  &,
+  &:active,
+  &.active,
+  &[disabled],
+  fieldset[disabled] & {
+    background-color: transparent;
+  }
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: transparent;
+  }
+  &:hover,
+  &:focus {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+    background-color: transparent;
+  }
+}
+
 // Block button
 // --------------------------------------------------
 
@@ -2112,6 +2143,23 @@ body.product-blowup-open {
   &,
   .form-control {
     text-align: center;
+  }
+  .newsletter-subscribe-input-wrapper {
+    position: relative;
+    
+    button[type="submit"] {
+      @extend .btn-link;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      opacity: 0;
+      font-size: 14px;
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+    }
   }
   @media (min-width: $screen-lg-min){
     margin-top: 0;
