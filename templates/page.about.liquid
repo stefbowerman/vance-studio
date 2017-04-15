@@ -24,7 +24,9 @@
       {% unless settings.newsletter_form_action == blank %}
         <form class="mc-ajax-form" action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate target="_blank">
           <div class="form-group">
-            <label for="newsletter-subscribe-input" class="small sr-only">Subscribe For Updates</label>
+            <strong class="small">Sign Up</strong><br />
+            {% comment %} Keep this label hidden because ajaxchimp messes with it {% endcomment %}
+            <label for="newsletter-subscribe-input" class="sr-only">Subscribe For Updates</label>
             <div class="newsletter-subscribe-input-wrapper">
               <input id="newsletter-subscribe-input" type="email" name="EMAIL" class="form-control" placeholder="Join Our Mailing List" value="{% if customer %}{{ customer.email }}{% endif %}" required="required"/>
               {% comment %} real people should not fill this in and expect good things - do not remove this or risk form bot signups {% endcomment %}
