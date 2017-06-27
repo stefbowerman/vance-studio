@@ -1,0 +1,20 @@
+.archive-content {}
+
+.archive-content--hidden {
+  opacity: 0;
+}
+
+.archive-grid {
+  margin: 0 -4px;
+}
+.archive-grid__spacer,
+.archive-grid__item {
+  width: percentage(1/2);
+  @media (min-width: $screen-md-min){
+    width: percentage(1/3);  
+  }
+}
+.archive-grid__item {
+  padding: 0 4px;
+  margin-bottom: 8px;
+}

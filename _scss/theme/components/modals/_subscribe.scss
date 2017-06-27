@@ -1,0 +1,42 @@
+.modal-subscribe {
+
+  input[type="email"] {
+    padding-right: 106px; // Make room for abs positioned button
+  }
+  button[type="submit"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: $font-size-small;
+  }
+}
+
+
+.modal-subscribe__logo {
+  height: 85px;
+  @include center-block();
+  margin-bottom: 25px;
+}
+
+.modal-subscribe__content-image {
+  display: none;
+  @media (min-width: $screen-sm-min){
+    display: block;
+  }
+}
+
+.modal-subscribe__content-wrap {
+  @include flexbox;
+  @include align-items(center);
+}
+
+.modal-subscribe__content-main {
+  @include flex(1);
+
+  .modal-subscribe__content-wrap--has-image & {
+    @media (min-width: $screen-sm-min){
+      padding-left: 25px;
+    }
+  }
+}

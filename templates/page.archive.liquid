@@ -1,0 +1,62 @@
+<div class="main-column main-column--wide">
+  <h1 class="page-title hidden">{{ page.title }}</h1> {% comment %} SEO {% endcomment %}
+  <div class="archive-content rte">
+    {{ page.content }}
+  </div>
+</div>
+
+{% comment %} 
+  Hide the content ASAP to avoid image flash.  If we put it below then we have to wait until we download the scripts
+{% endcomment %}
+
+<script type="text/javascript">
+  $('.archive-content').addClass('archive-content--hidden');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  (function($, Masonry, imagesLoaded){
+
+    var $wrapper    = $('.archive-content');
+    var $gridWrap   = $('<div class="archive-grid"></div>'); // Make a container for all the images
+    var $gridSpacer = $('<div class="archive-grid__spacer"></div>'); // Masonry needs this to determine layout - it stays empty
+    var $images     = $($wrapper.find('img').get().reverse()); // Reverse the list since we add them back to the dom using $.prepend which reverses them again
+
+    if($images.length === 0){
+      return;
+    }
+
+    // Hide the content
+    $wrapper.prepend($gridWrap);
+    $gridWrap.prepend($gridSpacer);
+
+    $images.each(function(i, img) {
+      var $img = $(img);
+      $img.remove();
+      $gridWrap.prepend($img);
+      $img.wrap('<div class="archive-grid__item"></div>');
+    });
+
+    $wrapper.find('p:empty').remove();
+
+    $gridWrap.masonry({
+      columnWidth: '.archive-grid__spacer',
+      itemSelector: '.archive-grid__item',
+      gutter: 0,
+      transitionDuration: 0,
+      initLayout: false,
+      percentPosition: true
+    });
+    
+    $gridWrap.masonry('on', 'layoutComplete', function(){
+      $wrapper.removeClass('archive-content--hidden');
+    });
+
+    $gridWrap.imagesLoaded( function(){
+      $gridWrap.masonry();
+    });
+
+  })(jQuery, Masonry, imagesLoaded);
+</script>

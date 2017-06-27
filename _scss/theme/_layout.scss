@@ -31,6 +31,11 @@
   @media (min-width: $screen-lg-min){
     width: calc(100% - ( 2 * #{$body-padding-h}));
   }
+
+  // Don't include sidebar on pages with this wide main column
+  &.main-column--wide {
+    max-width: $main-column-wide-max-width;
+  }
 }
 
 .sidebar {

@@ -42,6 +42,12 @@
   }
 }
 
+.button--inverted,
+.button--secondary {
+  color: $body-bg;
+  background: $text-color;
+}
+
 // Link buttons
 // -------------------------
 

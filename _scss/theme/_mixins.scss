@@ -1,5 +1,6 @@
-// Clearfix
+@import url('mixins/_flex.scss');
 
+// Clearfix
 @mixin clearfix() {
   &:before,
   &:after {
@@ -12,7 +13,6 @@
 }
 
 // Center-align a block level element
-
 @mixin center-block() {
   display: block;
   margin-left: auto;

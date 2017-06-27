@@ -1,0 +1,96 @@
+{% if template.name == "index" and settings.newsletter_form_action != blank %}
+
+  <div data-section-id="{{ section.id }}" data-section-type="modal-subscribe-section" data-enabled="{{ section.settings.enabled }}">
+    <div id="modal-subscribe" class="modal modal-subscribe" tabindex="-1" role="dialog" data-backdrop="static">
+      <div class="modal-dialog" role="document" style="max-width: {{ section.settings.max_width }}px;">
+        <div class="modal-content">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-body">
+            <div class="modal-subscribe__content-wrap{% if section.settings.image %} modal-subscribe__content-wrap--has-image{% endif %}">
+              {% if section.settings.image %}
+                <img src="{{ section.settings.image | img_url: '400x' }}" class="modal-subscribe__content-image" style="width: 40%;" />
+              {% endif %}
+              <div class="modal-subscribe__content-main">
+                
+                {% if section.settings.show_logo %}
+                  <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="modal-subscribe__logo" />
+                {% endif section.settings.show_logo %}
+
+                {% if section.settings.header_text != blank %}
+                  <p class="text-center"><strong>{{ section.settings.header_text }}</strong></p>
+                {% endif %}
+                {% if section.settings.body_text != blank %}
+                  <p class="text-center">{{ section.settings.body_text }}</p>
+                {% endif %}
+
+                <form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate target="_blank">
+                  <div class="form-group">
+                    {% comment %} Keep this label hidden because ajaxchimp messes with it {% endcomment %}
+                    <label for="newsletter-subscribe-input" class="sr-only">Subscribe For Updates</label>
+                    <div class="newsletter-subscribe-input-wrapper" style="position: relative;">
+                      <input id="newsletter-subscribe-input" type="email" name="EMAIL" class="form-control" placeholder="{{ section.settings.placeholder_text }}" value="{% if customer %}{{ customer.email }}{% endif %}" required="required"/>
+                      {% comment %} real people should not fill this in and expect good things - do not remove this or risk form bot signups {% endcomment %}
+                      <button class="button button--inverted" type="submit">Subscribe</button>
+                    </div>
+                    <div style="position: absolute; left: -5000px;"><input type="text" name="b_860d69c1b641125be92c01f64_1a8ecda325" tabindex="-1" value=""></div>
+                  </div>
+                  <p class="response-message text-center small" style="display: none;"></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Subscription Modal",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enabled",
+        "label": "Enabled?",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "max_width",
+        "min": 500,
+        "max": 800,
+        "step": 25,
+        "unit": "px",
+        "label": "Max width",
+        "default": 650
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_logo",
+        "label": "Show logo"
+      },
+      {
+        "type": "text",
+        "id": "header_text",
+        "label": "Header text"
+      },
+      {
+        "type": "text",
+        "id": "body_text",
+        "label": "Body text"
+      },
+      {
+        "type": "text",
+        "id": "placeholder_text",
+        "label": "Input placeholder text"
+      }
+    ]
+  }
+{% endschema %}
