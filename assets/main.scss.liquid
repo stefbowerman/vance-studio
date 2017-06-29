@@ -68,8 +68,7 @@ $headings-color:          inherit !default;
 //
 // Note: These variables are not generated into the Customizer.
 
-$zindex-logo:             1000 !default;
-$zindex-nav:              1000 !default;
+$zindex-header:           1000 !default;
 $zindex-footer:           1000 !default;
 $zindex-blowup:           1050 !default;
 $zindex-modal-background: 1990 !default;
@@ -1713,12 +1712,23 @@ footer {
   }
 }
 .header {
+  position: relative;
   letter-spacing: $letter-spacing-large;
+  width: 100%;
+  min-height: 1px;
+  transform: translate3d(0, 0, 0); // Fore GPU acceleration to avoid flickering when adding / remove .header--fixed
+
+  &.header--fixed {
+    position: fixed;
+    z-index: $zindex-header;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .header-logo {
-  position: fixed;
-  z-index: $zindex-logo;
+  position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -1736,9 +1746,8 @@ footer {
 .header-nav,
 .header-nav-mobile,
 .header-cart {
-  position: fixed;
+  position: absolute;
   top: 42px;
-  z-index: $zindex-logo;
 
   @media (min-width: $screen-sm-min) {
     top: 60px;
@@ -1781,7 +1790,7 @@ nav {
     opacity: 0;
     pointer-events: none;
     transition: opacity 100ms ease-out;
-    padding: 7px;
+    padding: 12px;
     border: 1px solid $text-color;
     background: $body-bg;
 
@@ -1819,6 +1828,10 @@ nav {
   &:focus,
   &:hover {
     color: $link-color;
+  }
+
+  .is-open & {
+    color: $link-hover-color;
   }
 }
 
@@ -2165,6 +2178,46 @@ nav {
   .modal-subscribe__content-wrap--has-image & {
     @media (min-width: $screen-sm-min){
       padding-left: 25px;
+    }
+  }
+}
+.ticker {
+  padding: 11px $body-padding-h*2;
+  text-align: center;
+  font-size: $font-size-small;
+  border-bottom: 1px solid transparent;
+
+  &.ticker--black {
+    background-color: $text-color;
+    color: #FFF;
+  }
+
+  &.ticker--outline {
+    background-color: #FFF;
+    border-bottom-color: $text-color;
+  }
+}
+
+.ticker__close {
+  position: absolute;
+  top: 8px;
+  right: $body-padding-h - 9px;
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 1.8rem;
+
+  &:hover,
+  &:focus {
+    color: $red;
+  }
+
+  .ticker--black & {
+    color: white;
+    &:hover,
+    &:focus {
+      color: $red;
     }
   }
 }

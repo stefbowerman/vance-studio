@@ -24,10 +24,21 @@
  */
 !function(e){if("function"==typeof define&&define.amd)define(e);else if("object"==typeof exports)module.exports=e();else{var n=window.Cookies,t=window.Cookies=e();t.noConflict=function(){return window.Cookies=n,t}}}(function(){function e(){for(var e=0,n={};e<arguments.length;e++){var t=arguments[e];for(var o in t)n[o]=t[o]}return n}function n(t){function o(n,r,i){var c;if(arguments.length>1){if(i=e({path:"/"},o.defaults,i),"number"==typeof i.expires){var s=new Date;s.setMilliseconds(s.getMilliseconds()+864e5*i.expires),i.expires=s}try{c=JSON.stringify(r),/^[\{\[]/.test(c)&&(r=c)}catch(a){}return r=encodeURIComponent(String(r)),r=r.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),n=encodeURIComponent(String(n)),n=n.replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent),n=n.replace(/[\(\)]/g,escape),document.cookie=[n,"=",r,i.expires&&"; expires="+i.expires.toUTCString(),i.path&&"; path="+i.path,i.domain&&"; domain="+i.domain,i.secure?"; secure":""].join("")}n||(c={});for(var p=document.cookie?document.cookie.split("; "):[],u=/(%[0-9A-Z]{2})+/g,d=0;d<p.length;d++){var f=p[d].split("="),l=f[0].replace(u,decodeURIComponent),m=f.slice(1).join("=");'"'===m.charAt(0)&&(m=m.slice(1,-1));try{if(m=t&&t(m,l)||m.replace(u,decodeURIComponent),this.json)try{m=JSON.parse(m)}catch(a){}if(n===l){c=m;break}n||(c[l]=m)}catch(a){}}return c}return o.get=o.set=o,o.getJSON=function(){return o.apply({json:!0},[].slice.call(arguments))},o.defaults={},o.remove=function(n,t){o(n,"",e(t,{expires:-1}))},o.withConverter=n,o}return n()});
 
+/*!
+ * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+ * http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+ * requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+ */
+!function(){for(var n=0,i=["ms","moz","webkit","o"],e=0;e<i.length&&!window.requestAnimationFrame;++e)window.requestAnimationFrame=window[i[e]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[i[e]+"CancelAnimationFrame"]||window[i[e]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(i,e){var a=(new Date).getTime(),o=Math.max(0,16-(a-n)),t=window.setTimeout(function(){i(a+o)},o);return n=a+o,t}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(n){clearTimeout(n)})}();
 
 /* jshint ignore:end */
 
 ;(function($, Modernizr, FastClick, Cookies, undefined){
+
+  // Top scope variables
+  var $window   = $(window);
+  var $document = $(document);
+  var $body     = $(document.body);
 
   // Global Namespace
   window.Vance = {};
@@ -46,6 +57,20 @@
 
   Vance.isThemeEditor = function(){
     return location.href.match(/myshopify.com/) && location.href.match(/theme_id/);
+  };
+
+  // Returns a string of numbers (used in generating values for cookies)
+  Vance.generateHashCode = function(str){
+    var hash = 0, i, chr;
+
+    if (str.length === 0) return hash;
+
+    for (i = 0; i < str.length; i++) {
+      chr   = str.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash  = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash).toString();
   };
 
   // Contains cookies and logic stuff pertaining to the current user.
@@ -78,7 +103,7 @@
         name : "vance-visits",
         value : 1,
         expiration : 365 * 10 // Really far into the future
-      },
+      }
     },
     // Removes any cookie already present with the same name.
     setCookie: function(cookie){
@@ -452,10 +477,10 @@
   Vance.sections.ModalSubscribe = function(section){
     this.$section  = $(section);
 
-    this.$form     = this.$section.find('form');
-    this.$input    = this.$form.find('input[type="email"]');
-    this.$modal    = this.$section.find('.modal');
-    this.$response = this.$section.find('.response-message');
+    this.$form        = this.$section.find('form');
+    this.$input       = this.$form.find('input[type="email"]');
+    this.$modal       = this.$section.find('.modal');
+    this.$response    = this.$section.find('.response-message');
 
     this.$modal.on('show.bs.modal',   this.onShow.bind(this))
                .on('shown.bs.modal',  this.onShown.bind(this))
@@ -465,10 +490,18 @@
       this.$response.hide();
     }.bind(this));
 
-    // Add some AJAX
-    this.ajaxForm = new Vance.AjaxChimp(this.$form, {
-      onSubmitDone: this.onSubmitDone.bind(this)
-    });
+    // Add fake the form response
+    if(Vance.isThemeEditor()){
+      this.$form.on('submit', function(){
+        this.onSubmitDone(true, this.$section.data('response-text') || 'Thank you for subscribing');
+        return false;
+      }.bind(this));
+    }
+    else {
+      this.ajaxForm = new Vance.AjaxChimp(this.$form, {
+        onSubmitDone: this.onSubmitDone.bind(this)
+      });
+    }
 
     if(this.shouldShow()){
       setTimeout(function(){
@@ -480,13 +513,15 @@
   
   Vance.sections.ModalSubscribe.prototype = {
     onSubmitDone: function(success, message){
-      this.$response.html(message).show();
       if(success){
+        this.$response.html(this.$section.data('response-text') || message);
         this.$input.val('');
-        setTimeout(function(){
-          this.$modal.modal('hide');
-        }.bind(this), 2000);
+        this.$form.hide();
       }
+      else {
+        this.$response.html(message);
+      }
+      this.$response.show();
     },
     shouldShow: function(){
       // Don't show it by default if we're inside the theme editor
@@ -527,6 +562,7 @@
     },
     onHidden: function(){
       this.$response.empty().hide();
+      this.$form.show();
     },
     // Theme editor events below
     onSelect: function(){
@@ -544,7 +580,68 @@
     }
   };
 
+  Vance.sections.Ticker = function(section){
+    
+    var EVENT_KEY = '.vance.ticker';
+
+    this.$section = $(section);
+    this.$ticker  = this.$section.find('.ticker');
+    this.$close   = this.$section.find('.ticker__close');
+    
+    this.events = {
+      SHOW  : 'show'  + EVENT_KEY,
+      CLOSE : 'close' + EVENT_KEY
+    };
+
+    this.cookie = {
+      name : "vance-ticker",
+      value : Vance.generateHashCode(this.$ticker.text()),
+      expiration : 7 // 1 week
+    };
+
+    // If they haven't seen the ticker, or the ticker contents have changed since the last time they saw it
+    if(!Vance.User.hasCookie( this.cookie ) || Vance.User.getCookie( this.cookie ) !== this.cookie.value){
+      this.show();
+    }
+
+    if(Vance.isThemeEditor()){
+      this.$close.hide(); // Don't show this on the theme editor because it just makes life more difficult
+    }
+    else {
+      this.$close.on('click', function(e){
+        e.preventDefault();
+        this.close();
+      }.bind(this));
+    }
+
+  };
+
+  Vance.sections.Ticker.prototype = {
+    show: function(){
+      this.$ticker.show();
+      $window.trigger( $.Event(this.events.SHOW) );
+    },
+    close: function(){
+      this.$ticker.remove();
+      Vance.User.setCookie(this.cookie);
+      $window.trigger( $.Event(this.events.CLOSE) );
+    },
+    onSelect: function(){
+      this.show();
+    },
+    onLoad: function(){
+      this.show();
+    }
+  };
+
   $(function(){
+
+    // DOM ready vars
+    var $ticker          = $('.ticker');
+    var $header          = $('.header');
+    var $mobileNav       = $('.header-nav-mobile');
+    var $mobileNavToggle = $('.header-nav-mobile__toggle');
+    var $bannerVideo     = $('.banner-video-wrapper');
 
     /* Remove SVG images to avoid broken images in all browsers that don't support SVG. */
     /*==========================*/
@@ -556,6 +653,7 @@
       FastClick.attach(document.body);
     }
 
+    // User cookies / logic
     Vance.User.init();
 
     // Generic email signup form (see sections/page-about-template.liquid)
@@ -563,19 +661,12 @@
 
     var sectionManager = new Vance.sectionManager();
         sectionManager.register('modal-subscribe-section', Vance.sections.ModalSubscribe);
-    
-    /* Prepare to have floated images fill the width of the design on blog pages on small devices. */
-    /*==========================*/ 
-    var images = $('.article img').load(function() {
-      var src = $(this).attr('src').replace(/_grande\.|_large\.|_medium\.|_small\./, '.');
-      var width = $(this).width();
-      $(this).attr('src', src).attr('width', width).removeAttr('height');
-    });
+        sectionManager.register('ticker-section', Vance.sections.Ticker);
 
     /* Mobile menu toggle K.I.S.S */
     /*==========================*/ 
-    $('.header-nav-mobile__toggle').on('click', function(){
-      $('.header-nav-mobile').toggleClass('is-open');
+    $mobileNavToggle.on('click', function(){
+      $mobileNav.toggleClass('is-open');
       return false;
     });
 
@@ -593,9 +684,36 @@
     });
 
     /* Remove Banner video if we have a touch device and it's a small screen */
-    var $bannerVideo = $('.banner-video-wrapper');
     if($bannerVideo.length && Vance.isMobile() && Vance.isTouch()){
       $bannerVideo.remove();
+    }
+
+    // Scroll stuff to make sure the ticker + header work correctly together
+    function tickerScrollCheck(){     
+      // The theme editor screws screws up the $ticker variable outside of this scope when we load / unload the section
+      // so we have to reset it here
+      var $ticker = $('.ticker');
+
+      // If ticker is there, visible, and we haven't scrolled past it...
+      if($ticker && $ticker.get(0).style.display !== "none" && $window.scrollTop() < $ticker.outerHeight()){
+        $header.removeClass('header--fixed');
+      }
+      else {
+        $header.addClass('header--fixed');
+      }
+    }
+
+    if($ticker.length && !$ticker.is(':hidden')){
+      $window.on('scroll.vance.ticker', $.throttle(50, requestAnimationFrame.bind(window, tickerScrollCheck)) ); // throttle + rAF = smooth scrolling :)
+      $window.on('show.vance.ticker',     tickerScrollCheck);
+      $window.on('close.vance.ticker',    function(){
+        $header.addClass('header--fixed');
+        $window.off('scroll.vance.ticker');
+      });
+      tickerScrollCheck(); // hit this one time on init to make sure everything is good
+    }
+    else {
+      $header.addClass('header--fixed');
     }
 
   });

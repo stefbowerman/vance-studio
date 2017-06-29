@@ -1,6 +1,6 @@
 {% if template.name == "index" and settings.newsletter_form_action != blank %}
 
-  <div data-section-id="{{ section.id }}" data-section-type="modal-subscribe-section" data-enabled="{{ section.settings.enabled }}">
+  <div data-section-id="{{ section.id }}" data-section-type="modal-subscribe-section" data-enabled="{{ section.settings.enabled }}" data-response-text="{{ section.settings.respnse_text | escape | newline_to_br }}">
     <div id="modal-subscribe" class="modal modal-subscribe" tabindex="-1" role="dialog" data-backdrop="static">
       <div class="modal-dialog" role="document" style="max-width: {{ section.settings.max_width }}px;">
         <div class="modal-content">
@@ -16,14 +16,13 @@
                   <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="modal-subscribe__logo" />
                 {% endif section.settings.show_logo %}
 
-                {% if section.settings.header_text != blank %}
-                  <p class="text-center"><strong>{{ section.settings.header_text }}</strong></p>
-                {% endif %}
-                {% if section.settings.body_text != blank %}
-                  <p class="text-center">{{ section.settings.body_text }}</p>
-                {% endif %}
-
                 <form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate target="_blank">
+                  {% if section.settings.header_text != blank %}
+                    <p class="text-center"><strong>{{ section.settings.header_text }}</strong></p>
+                  {% endif %}
+                  {% if section.settings.body_text != blank %}
+                    <p class="text-center">{{ section.settings.body_text }}</p>
+                  {% endif %}
                   <div class="form-group">
                     {% comment %} Keep this label hidden because ajaxchimp messes with it {% endcomment %}
                     <label for="newsletter-subscribe-input" class="sr-only">Subscribe For Updates</label>
@@ -34,8 +33,8 @@
                     </div>
                     <div style="position: absolute; left: -5000px;"><input type="text" name="b_860d69c1b641125be92c01f64_1a8ecda325" tabindex="-1" value=""></div>
                   </div>
-                  <p class="response-message text-center small" style="display: none;"></p>
                 </form>
+                <div class="response-message text-center -small" style="display: none;"></div>
               </div>
             </div>
           </div>
@@ -90,6 +89,12 @@
         "type": "text",
         "id": "placeholder_text",
         "label": "Input placeholder text"
+      },
+      {
+        "type": "textarea",
+        "id": "respnse_text",
+        "label": "Response text",
+        "info": "Text displayed when someone signs up successfully.  Leave blank for a generic message."
       }
     ]
   }

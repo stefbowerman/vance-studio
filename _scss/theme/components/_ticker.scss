@@ -1,0 +1,40 @@
+.ticker {
+  padding: 11px $body-padding-h*2;
+  text-align: center;
+  font-size: $font-size-small;
+  border-bottom: 1px solid transparent;
+
+  &.ticker--black {
+    background-color: $text-color;
+    color: #FFF;
+  }
+
+  &.ticker--outline {
+    background-color: #FFF;
+    border-bottom-color: $text-color;
+  }
+}
+
+.ticker__close {
+  position: absolute;
+  top: 8px;
+  right: $body-padding-h - 9px;
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 1.8rem;
+
+  &:hover,
+  &:focus {
+    color: $red;
+  }
+
+  .ticker--black & {
+    color: white;
+    &:hover,
+    &:focus {
+      color: $red;
+    }
+  }
+}

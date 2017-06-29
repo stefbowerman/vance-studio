@@ -50,6 +50,8 @@
 
   <body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
   
+    {% section 'ticker' %}
+
     {% include 'header' %}
 
     <main class="main" role="main">
@@ -62,7 +64,7 @@
     
     {{ 'app.js'  | asset_url | script_tag }}
 
-    {% if template contains 'product' %}
+    {% if template.name == 'product' %}
       <script src="https://player.vimeo.com/api/player.js"></script>
       {{ 'product.js' | asset_url | script_tag }}
     {% endif %}
