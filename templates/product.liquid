@@ -149,11 +149,13 @@
       </form>
 
       <div id="product-description" class="product-details__description rte" itemprop="description">
+        {% comment %}
         {% unless product.available %}
           <p class="product-soldoutmsg">
             *Although this item is currently out of stock, it is available for special order.  To place a special order please email us at <a href="{{ special_order_mailto }}" target="_blank" style="text-decoration: underline">{{ special_order_email }}</a>
           </p>
         {% endunless %}
+        {% endcomment %}
         {{ description | strip }}
       </div>
       
