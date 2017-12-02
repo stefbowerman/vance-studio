@@ -62,7 +62,7 @@ assets/logo-white.png:
 assets/logo.png:
   development: 2017-12-02T13:21:28-08:00   f9386f3fb742a201b3e5e739b81f742f
 assets/main.scss.liquid:
-  development: 2017-12-02T13:34:02-08:00   864f5494ceb47d8ca95174415b7e0cd9
+  development: 2017-12-02T14:08:08-08:00   24b26e18f7fb70e773721cb72d2bceeb
 assets/modernizr.min.js:
   development: 2017-12-02T13:21:29-08:00   5d885f15f814b903095e0051a484761e
 assets/og-share-1.jpg:
@@ -108,7 +108,7 @@ snippets/product-list-collection.liquid:
 snippets/product-list-product-swatches.liquid:
   development: 2017-12-02T13:21:30-08:00   e46d048e1e41de852d1a9e8788f51a01
 snippets/product-list-product.liquid:
-  development: 2017-12-02T13:21:30-08:00   5d2927af633dd8546908cc5a0a7c07fa
+  development: 2017-12-02T14:03:28-08:00   f7173e30bcbf458824eb8e08f66f2d61
 snippets/site-nav.liquid:
   development: 2017-12-02T13:21:30-08:00   db9ff93f4606b14b0173299ef4b1b265
 snippets/social-links.liquid:
@@ -126,7 +126,7 @@ templates/blog.liquid:
 templates/cart.liquid:
   development: 2017-12-02T13:21:30-08:00   f1bead0cd6321c33d05ee6b1cf95f2c3
 templates/collection.liquid:
-  development: 2017-12-02T13:21:30-08:00   d95e4c917cc9088d28c584b2473aa1d4
+  development: 2017-12-02T14:07:01-08:00   134370a6f48c919ecd83897184523d07
 templates/customers/account.liquid:
   development: 2017-12-02T13:21:30-08:00   da403a6b08646af45bb5be296cb2e822
 templates/customers/activate_account.liquid:
@@ -140,7 +140,7 @@ templates/customers/register.liquid:
 templates/customers/reset_password.liquid:
   development: 2017-12-02T13:21:30-08:00   9988647d236b6a592fa4f79a5c381a82
 templates/index.liquid:
-  development: 2017-12-02T13:21:30-08:00   7822ef582cf7b5f243e336526b964a51
+  development: 2017-12-02T14:07:06-08:00   50aca4687b7b14849c9cecb2b91aeb36
 templates/list-collections.liquid:
   development: 2017-12-02T13:21:30-08:00   94cde9a427aaec0ecc5fefeac269b5d5
 templates/page.about.liquid:

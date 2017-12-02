@@ -9,7 +9,7 @@
 {% assign collection = collections[settings.homepage_collection] %}
 {% endunless %}
 
-{% paginate collection.products by 10 %}
+{% paginate collection.products by 50 %}
 
 
   {% if paginate.current_page == 1 %}
@@ -22,9 +22,9 @@
 
   {% endif %}
 
-  <div class="main-column">
+  <div class="main-column main-column--widest">
 
-      <ul class="product-list">
+      <ul class="product-list product-list--2x2">
       {% for product in collection.products %}
         {% include 'product-list-product' %}
       {% else %}

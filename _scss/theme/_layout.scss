@@ -36,6 +36,11 @@
   &.main-column--wide {
     max-width: $main-column-wide-max-width;
   }
+
+  // Don't include sidebar on pages with this wide main column
+  &.main-column--widest {
+    max-width: $main-column-widest-max-width;
+  }
 }
 
 .sidebar {

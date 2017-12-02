@@ -105,9 +105,10 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 $hr-border:                   $gray-lighter !default;
 $table-border-color:          $text-color;
 
-$main-column-max-width:       580px;
-$main-column-wide-max-width:  1000px;
-$body-padding-h:              35px;
+$main-column-max-width:        580px;
+$main-column-wide-max-width:   1000px;
+$main-column-widest-max-width: 1200px;
+$body-padding-h:               35px;
 
 //== Forms
 //
@@ -1162,6 +1163,11 @@ hr {
   &.main-column--wide {
     max-width: $main-column-wide-max-width;
   }
+
+  // Don't include sidebar on pages with this wide main column
+  &.main-column--widest {
+    max-width: $main-column-widest-max-width;
+  }
 }
 
 .sidebar {
@@ -1876,20 +1882,18 @@ nav {
 .product-list__product-img {
   width: 100%;
   margin-bottom: 30px;
+
+  .product-list__product--sold-out & {
+    opacity: 0.25;
+  }
 }
 
 .product-list__product-info {
-  @include clearfix;
+  text-align: center;
 }
 
 .product-list__product-info-link {
-  @media (min-width: $screen-sm-min){
-    float: left;
 
-    .product-list__product--has-swatches & {
-      width: 75%;
-    }
-  }
 }
 
 .product-list__product-title {
@@ -1898,19 +1902,43 @@ nav {
 }
 
 .product-list__product-price {
+
 }
 
 .product-list__product-swatches {
   display: block;
-  margin-top: 6px;
+  margin-top: 10px;
+}
 
-  @media (min-width: $screen-sm-min){
-    float: right;
-    width: 25%;
-    margin-top: 1px;
-    text-align: right;
+// 2 Across variety - used with `wide` main column
+.product-list--2x2 {
+
+  @media (min-width: $screen-lg-min) {
+    .product-list__product {
+      width: 50%;
+      padding: 0 $body-padding-h / 2;
+    }
   }
-  
+
+  html:not(.flexbox) & {
+    @include clearfix;
+    @media (min-width: $screen-lg-min) {
+      .product-list__product {
+        float: left;
+        &:nth-child(2n+1) {
+          clear: left;
+        }
+      }
+    }
+  }
+
+  html.flexbox & {
+    // lay it out with flex box instead
+    @include flexbox;
+    @include flex-wrap(wrap);
+    @include justify-content(space-around);
+  }
+
 }
 .swatches {
   font-size: 0;

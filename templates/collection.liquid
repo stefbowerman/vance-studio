@@ -4,9 +4,9 @@
   - Never paginate by more than 50.
 {% endcomment %}
 
-{% paginate collection.products by 10 %}
+{% paginate collection.products by 50 %}
 
-<div class="main-column">
+<div class="main-column main-column--widest">
 
   {% unless collection.handle == 'all' %}
     <h1 class="collection-title">{{ collection.title }}</h1>
@@ -18,7 +18,7 @@
   </div>
   {% endif %}
 
-  <ul class="product-list">
+  <ul class="product-list product-list--2x2">
   {% for product in collection.products %}
     {% include 'product-list-product' %}
   {% else %}
