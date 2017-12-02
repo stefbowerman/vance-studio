@@ -105,9 +105,10 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 $hr-border:                   $gray-lighter !default;
 $table-border-color:          $text-color;
 
-$main-column-max-width:       580px;
-$main-column-wide-max-width:  1000px;
-$body-padding-h:              35px;
+$main-column-max-width:        580px;
+$main-column-wide-max-width:   1000px;
+$main-column-widest-max-width: 1200px;
+$body-padding-h:               35px;
 
 //== Forms
 //

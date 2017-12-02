@@ -8,7 +8,7 @@
 {% endcapture %}
 {% assign swatch_html = swatch_html | strip %}
 
-  <li class="product-list__product {% if swatch_html != blank %}product-list__product--has-swatches{% endif %}">
+  <li class="product-list__product{% if product.available != true %} product-list__product--sold-out{% endif %}">
     <a href="{{ product.url }}" title="{{ product.title | escape }}">
       {% comment %}
         Let's cheat a little bit here and force hi-res images for desktop screens by defining the container

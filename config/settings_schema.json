@@ -1,7 +1,7 @@
 [
   {
-   "name": "Currency",
-   "settings": [
+    "name": "Currency",
+    "settings": [
       {
         "type": "checkbox",
         "id": "show_multiple_currencies",
@@ -26,11 +26,11 @@
         "default": "money_with_currency_format"
       },
       {
-       "type": "text",
-       "id": "supported_currencies",
-       "label": "Supported currencies",
-       "default": "INR GBP CAD USD AUD EUR JPY",
-       "info": "Use the country's ISO [currency code](http://www.xe.com/iso4217.php). Separate your currency codes with a space."
+        "type": "text",
+        "id": "supported_currencies",
+        "label": "Supported currencies",
+        "default": "INR GBP CAD USD AUD EUR JPY",
+        "info": "Use the country's ISO [currency code](http:\/\/www.xe.com\/iso4217.php). Separate your currency codes with a space."
       }
     ]
   },
