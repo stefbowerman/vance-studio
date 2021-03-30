@@ -1,0 +1,75 @@
+{% comment %}
+  Important notes about pagination:
+  - Never access collection.products before the opening paginate tag.
+  - Never paginate by more than 50.
+{% endcomment %}
+
+{% assign collection = collections.all %}
+
+{% unless section.settings.collection == blank or collections[section.settings.collection].empty? %}
+  {% assign collection = collections[section.settings.collection] %}
+{% endunless %}
+
+{% paginate collection.products by 50 %}
+  {% if paginate.current_page == 1 %}
+    <div class="banner-video-wrapper">
+      <div class="banner-video-positioner">
+        <iframe
+          id="home-video"
+          src="https://player.vimeo.com/video/207395334?autoplay=1&title=0&byline=0&portrait=0&loop=1&controls=0&muted=1&player_id=home-video"
+          frameborder="0"
+          webkitallowfullscreen=""
+          mozallowfullscreen=""
+          allowfullscreen=""
+        ></iframe>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="main-column main-column--widest">
+    <ul class="product-list product-list--col-{{ section.settings.column_count }}">
+      {% for product in collection.products %}
+        {% include 'product-list-product' %}
+      {% else %}
+        <p class="text-center">
+          {{ section.settings.empty_text | default: 'Nothing here' }}</p>
+      {% endfor %}
+    </ul>
+
+    {% if paginate.pages > 1 %}
+      <div class="pagination">
+        {{ paginate | default_pagination: next: '»', previous: '«' }}
+      </div>
+    {% endif %}
+  </div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Homepage",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+         "type": "select",
+         "id": "column_count",
+         "label": "Grid Columns",
+         "options": [
+            { "value": "2", "label": "2" },
+            { "value": "3", "label": "3" }
+         ],
+         "default": "2"
+      },
+      {
+        "type": "textarea",
+        "id": "empty_text",
+        "label": "Empty Text",
+        "info": "Text that displays when no products are available"
+      }
+    ]
+  }
+{% endschema %}

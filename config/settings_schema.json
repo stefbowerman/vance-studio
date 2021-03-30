@@ -35,21 +35,6 @@
     ]
   },
   {
-    "name": "Homepage",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Featured collection"
-      },
-      {
-        "type": "collection",
-        "id": "homepage_collection",
-        "label": "Feature products from this collection",
-        "info": "If 'none' is selected, page will default to all products"
-      }
-    ]
-  },
-  {
     "name": "Product Page",
     "settings": [
       {
